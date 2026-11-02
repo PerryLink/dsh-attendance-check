@@ -1,0 +1,23 @@
+$ node samples/quickstart/run.mjs --check
+dsh-attendance-check quickstart - synthetic punch records (not employee data)
+period 2026-06-22..2026-06-26 (5 workdays); 6 employee(s), 30 audited day(s); 237.00h worked, 5.00h overtime
+employees:
+  张伟: 5 day(s), 41.50h worked, 1.50h overtime, 0 anomaly(ies)
+  李娜: 5 day(s), 43.50h worked, 3.50h overtime, 1 anomaly(ies)
+  王强: 5 day(s), 32.00h worked, 0.00h overtime, 1 anomaly(ies)
+  刘洋: 5 day(s), 40.00h worked, 0.00h overtime, 1 anomaly(ies)
+  陈静: 5 day(s), 40.00h worked, 0.00h overtime, 0 anomaly(ies)
+  赵磊: 5 day(s), 40.00h worked, 0.00h overtime, 0 anomaly(ies)
+violations (3):
+  [high] 2026-06-25 王强 缺少下班卡，无法核算当日工时
+  [medium] 2026-06-24 李娜 当日加班 3.50 小时，超出单日上限 3.00 小时共 0.50 小时
+  [low] 2026-06-26 刘洋 休息 30 分钟，低于规则要求的 60 分钟
+monthly 2026-06 张伟: 5 expected / 5 attended, 1.50h overtime, 0 anomaly(ies), over_limit=false
+monthly 2026-06 李娜: 5 expected / 5 attended, 3.50h overtime, 1 anomaly(ies), over_limit=false
+monthly 2026-06 王强: 5 expected / 4 attended, 0.00h overtime, 1 anomaly(ies), over_limit=false
+monthly 2026-06 刘洋: 5 expected / 5 attended, 0.00h overtime, 1 anomaly(ies), over_limit=false
+monthly 2026-06 陈静: 5 expected / 5 attended, 0.00h overtime, 0 anomaly(ies), over_limit=false
+monthly 2026-06 赵磊: 5 expected / 5 attended, 0.00h overtime, 0 anomaly(ies), over_limit=false
+reconciliation CSV exports/attendance-2026-06-22-2026-06-26.csv: 30 rows, 1668 bytes, sha256 3e0a53a71a44...
+golden samples/quickstart/expected/result.json matches
+quickstart ok

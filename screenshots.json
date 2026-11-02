@@ -1,0 +1,15 @@
+[
+  {
+    "path": "docs/assets/quickstart.png",
+    "kind": "quickstart",
+    "alt": "dsh-attendance-check quickstart terminal output",
+    "caption": "Real command: node samples/quickstart/run.mjs --check — 6 employees × 5 workdays yield 30 audited days, 5.00h overtime, 2 overtime days (one cross-midnight), 1 missing punch, 1 short break and 3 severity-sorted violations; the reconciliation CSV has 30 rows. Rendered from the captured terminal output with the CJK font msyh.ttc.",
+    "command": "node samples/quickstart/run.mjs --check",
+    "run_at": "2026-11-02T16:32:20Z",
+    "output_sha256": "2c48f215348d70b9481961d89ca2b82c78a894178c1abf375521b2b0b860e30c",
+    "output_path": "samples/quickstart/expected/result.json",
+    "log": "docs/assets/quickstart.log",
+    "log_sha256": "73e08c05885cb7182cf9bc0df5213b3f11dd2784257e10a26d21fc85130efbe8",
+    "image_sha256": "505bee2822438dc71a74340de0b2e5fc493a6bcb0701baff930e6cd9b98c0ca1"
+  }
+]

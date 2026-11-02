@@ -1,0 +1,784 @@
+{
+  "sample": "samples/quickstart/input/attendance-2026-06.csv",
+  "check": {
+    "period": {
+      "from": "2026-06-22",
+      "to": "2026-06-26",
+      "workdays": 5,
+      "months": [
+        "2026-06"
+      ]
+    },
+    "source_sha256": "2a0c0164a2f5915eb3dcb75189f83bb329f07d51bc9d51c18940eae5fe1fa29f",
+    "policy": {
+      "standard_hours": 8,
+      "daily_overtime_cap_hours": 3,
+      "monthly_overtime_cap_hours": 36,
+      "min_break_minutes": 60,
+      "include_holidays": false
+    },
+    "employees": [
+      {
+        "employee": "张伟",
+        "days": [
+          {
+            "date": "2026-06-22",
+            "weekday": "周一",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-23",
+            "weekday": "周二",
+            "clock_in": "14:00",
+            "clock_out": "次日 00:30",
+            "break_minutes": 60,
+            "worked_minutes": 570,
+            "overtime_minutes": 90,
+            "holiday": false,
+            "cross_midnight": true,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "overtime",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-24",
+            "weekday": "周三",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-25",
+            "weekday": "周四",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-26",
+            "weekday": "周五",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          }
+        ],
+        "worked_minutes": 2490,
+        "overtime_minutes": 90,
+        "over_limit_days": 0,
+        "over_limit_months": 0,
+        "missing_punches": 0,
+        "rest_short_days": 0,
+        "skipped_holiday_days": 0,
+        "monthly_overtime": [
+          {
+            "month": "2026-06",
+            "overtime_minutes": 90,
+            "cap_minutes": 2160,
+            "over_minutes": 0,
+            "over_limit": false
+          }
+        ]
+      },
+      {
+        "employee": "李娜",
+        "days": [
+          {
+            "date": "2026-06-22",
+            "weekday": "周一",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-23",
+            "weekday": "周二",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-24",
+            "weekday": "周三",
+            "clock_in": "09:00",
+            "clock_out": "21:30",
+            "break_minutes": 60,
+            "worked_minutes": 690,
+            "overtime_minutes": 210,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "over_limit",
+            "issue_codes": [
+              "E_ATT_OVER_LIMIT"
+            ]
+          },
+          {
+            "date": "2026-06-25",
+            "weekday": "周四",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-26",
+            "weekday": "周五",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          }
+        ],
+        "worked_minutes": 2610,
+        "overtime_minutes": 210,
+        "over_limit_days": 1,
+        "over_limit_months": 0,
+        "missing_punches": 0,
+        "rest_short_days": 0,
+        "skipped_holiday_days": 0,
+        "monthly_overtime": [
+          {
+            "month": "2026-06",
+            "overtime_minutes": 210,
+            "cap_minutes": 2160,
+            "over_minutes": 0,
+            "over_limit": false
+          }
+        ]
+      },
+      {
+        "employee": "王强",
+        "days": [
+          {
+            "date": "2026-06-22",
+            "weekday": "周一",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-23",
+            "weekday": "周二",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-24",
+            "weekday": "周三",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-25",
+            "weekday": "周四",
+            "clock_in": "09:00",
+            "clock_out": "",
+            "break_minutes": 60,
+            "worked_minutes": 0,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": true,
+            "status": "missing_punch",
+            "issue_codes": [
+              "E_ATT_MISSING_PUNCH"
+            ]
+          },
+          {
+            "date": "2026-06-26",
+            "weekday": "周五",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          }
+        ],
+        "worked_minutes": 1920,
+        "overtime_minutes": 0,
+        "over_limit_days": 0,
+        "over_limit_months": 0,
+        "missing_punches": 1,
+        "rest_short_days": 0,
+        "skipped_holiday_days": 0,
+        "monthly_overtime": [
+          {
+            "month": "2026-06",
+            "overtime_minutes": 0,
+            "cap_minutes": 2160,
+            "over_minutes": 0,
+            "over_limit": false
+          }
+        ]
+      },
+      {
+        "employee": "刘洋",
+        "days": [
+          {
+            "date": "2026-06-22",
+            "weekday": "周一",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-23",
+            "weekday": "周二",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-24",
+            "weekday": "周三",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-25",
+            "weekday": "周四",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-26",
+            "weekday": "周五",
+            "clock_in": "09:00",
+            "clock_out": "17:30",
+            "break_minutes": 30,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "rest_short",
+            "issue_codes": [
+              "E_ATT_REST_SHORT"
+            ]
+          }
+        ],
+        "worked_minutes": 2400,
+        "overtime_minutes": 0,
+        "over_limit_days": 0,
+        "over_limit_months": 0,
+        "missing_punches": 0,
+        "rest_short_days": 1,
+        "skipped_holiday_days": 0,
+        "monthly_overtime": [
+          {
+            "month": "2026-06",
+            "overtime_minutes": 0,
+            "cap_minutes": 2160,
+            "over_minutes": 0,
+            "over_limit": false
+          }
+        ]
+      },
+      {
+        "employee": "陈静",
+        "days": [
+          {
+            "date": "2026-06-22",
+            "weekday": "周一",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-23",
+            "weekday": "周二",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-24",
+            "weekday": "周三",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-25",
+            "weekday": "周四",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-26",
+            "weekday": "周五",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          }
+        ],
+        "worked_minutes": 2400,
+        "overtime_minutes": 0,
+        "over_limit_days": 0,
+        "over_limit_months": 0,
+        "missing_punches": 0,
+        "rest_short_days": 0,
+        "skipped_holiday_days": 0,
+        "monthly_overtime": [
+          {
+            "month": "2026-06",
+            "overtime_minutes": 0,
+            "cap_minutes": 2160,
+            "over_minutes": 0,
+            "over_limit": false
+          }
+        ]
+      },
+      {
+        "employee": "赵磊",
+        "days": [
+          {
+            "date": "2026-06-22",
+            "weekday": "周一",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-23",
+            "weekday": "周二",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-24",
+            "weekday": "周三",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-25",
+            "weekday": "周四",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          },
+          {
+            "date": "2026-06-26",
+            "weekday": "周五",
+            "clock_in": "09:00",
+            "clock_out": "18:00",
+            "break_minutes": 60,
+            "worked_minutes": 480,
+            "overtime_minutes": 0,
+            "holiday": false,
+            "cross_midnight": false,
+            "missing_in": false,
+            "missing_out": false,
+            "status": "normal",
+            "issue_codes": []
+          }
+        ],
+        "worked_minutes": 2400,
+        "overtime_minutes": 0,
+        "over_limit_days": 0,
+        "over_limit_months": 0,
+        "missing_punches": 0,
+        "rest_short_days": 0,
+        "skipped_holiday_days": 0,
+        "monthly_overtime": [
+          {
+            "month": "2026-06",
+            "overtime_minutes": 0,
+            "cap_minutes": 2160,
+            "over_minutes": 0,
+            "over_limit": false
+          }
+        ]
+      }
+    ],
+    "violations": [
+      {
+        "severity": "high",
+        "rank": 30,
+        "kind": "missing_punch",
+        "scope": "day",
+        "code": "E_ATT_MISSING_PUNCH",
+        "employee": "王强",
+        "date": "2026-06-25",
+        "month": "2026-06",
+        "minutes": 0,
+        "message": "2026-06-25 王强 缺少下班卡，无法核算当日工时"
+      },
+      {
+        "severity": "medium",
+        "rank": 20,
+        "kind": "over_limit",
+        "scope": "day",
+        "code": "E_ATT_OVER_LIMIT",
+        "employee": "李娜",
+        "date": "2026-06-24",
+        "month": "2026-06",
+        "minutes": 30,
+        "message": "2026-06-24 李娜 当日加班 3.50 小时，超出单日上限 3.00 小时共 0.50 小时"
+      },
+      {
+        "severity": "low",
+        "rank": 10,
+        "kind": "rest_short",
+        "scope": "day",
+        "code": "E_ATT_REST_SHORT",
+        "employee": "刘洋",
+        "date": "2026-06-26",
+        "month": "2026-06",
+        "minutes": 30,
+        "message": "2026-06-26 刘洋 休息 30 分钟，低于规则要求的 60 分钟"
+      }
+    ],
+    "totals": {
+      "employees": 6,
+      "days": 30,
+      "skipped_holiday_rows": 0,
+      "worked_minutes": 14220,
+      "overtime_minutes": 300,
+      "over_limit_days": 1,
+      "over_limit_months": 0,
+      "missing_punches": 1,
+      "rest_short_days": 1,
+      "violations": 3
+    }
+  },
+  "summary": {
+    "period": {
+      "from": "2026-06-22",
+      "to": "2026-06-26",
+      "workdays": 5,
+      "months": [
+        "2026-06"
+      ]
+    },
+    "source_sha256": "2a0c0164a2f5915eb3dcb75189f83bb329f07d51bc9d51c18940eae5fe1fa29f",
+    "policy": {
+      "standard_hours": 8,
+      "daily_overtime_cap_hours": 3,
+      "monthly_overtime_cap_hours": 36,
+      "min_break_minutes": 60,
+      "include_holidays": false
+    },
+    "rows": [
+      {
+        "employee": "张伟",
+        "month": "2026-06",
+        "expected_days": 5,
+        "attended_days": 5,
+        "overtime_minutes": 90,
+        "overtime_hours": 1.5,
+        "anomaly_count": 0,
+        "missing_punches": 0,
+        "rest_short_days": 0,
+        "over_limit_days": 0,
+        "over_limit": false
+      },
+      {
+        "employee": "李娜",
+        "month": "2026-06",
+        "expected_days": 5,
+        "attended_days": 5,
+        "overtime_minutes": 210,
+        "overtime_hours": 3.5,
+        "anomaly_count": 1,
+        "missing_punches": 0,
+        "rest_short_days": 0,
+        "over_limit_days": 1,
+        "over_limit": false
+      },
+      {
+        "employee": "王强",
+        "month": "2026-06",
+        "expected_days": 5,
+        "attended_days": 4,
+        "overtime_minutes": 0,
+        "overtime_hours": 0,
+        "anomaly_count": 1,
+        "missing_punches": 1,
+        "rest_short_days": 0,
+        "over_limit_days": 0,
+        "over_limit": false
+      },
+      {
+        "employee": "刘洋",
+        "month": "2026-06",
+        "expected_days": 5,
+        "attended_days": 5,
+        "overtime_minutes": 0,
+        "overtime_hours": 0,
+        "anomaly_count": 1,
+        "missing_punches": 0,
+        "rest_short_days": 1,
+        "over_limit_days": 0,
+        "over_limit": false
+      },
+      {
+        "employee": "陈静",
+        "month": "2026-06",
+        "expected_days": 5,
+        "attended_days": 5,
+        "overtime_minutes": 0,
+        "overtime_hours": 0,
+        "anomaly_count": 0,
+        "missing_punches": 0,
+        "rest_short_days": 0,
+        "over_limit_days": 0,
+        "over_limit": false
+      },
+      {
+        "employee": "赵磊",
+        "month": "2026-06",
+        "expected_days": 5,
+        "attended_days": 5,
+        "overtime_minutes": 0,
+        "overtime_hours": 0,
+        "anomaly_count": 0,
+        "missing_punches": 0,
+        "rest_short_days": 0,
+        "over_limit_days": 0,
+        "over_limit": false
+      }
+    ],
+    "totals": {
+      "employees": 6,
+      "months": 1,
+      "expected_days": 30,
+      "attended_days": 29,
+      "overtime_minutes": 300,
+      "over_limit_employees": 0,
+      "anomaly_count": 3
+    }
+  },
+  "exports": {
+    "reconciliation": {
+      "path": "exports/attendance-2026-06-22-2026-06-26.csv",
+      "filename": "attendance-2026-06-22-2026-06-26.csv",
+      "sha256": "3e0a53a71a44de202d2b774c043d7bce596f02e5fdde0ac2264eec75ff54593e",
+      "bytes": 1668,
+      "rows": 30,
+      "employee_count": 6,
+      "over_limit_days": 1,
+      "missing_punches": 1,
+      "violation_count": 3,
+      "period": {
+        "from": "2026-06-22",
+        "to": "2026-06-26",
+        "workdays": 5,
+        "months": [
+          "2026-06"
+        ]
+      },
+      "text": "员工,日期,上班,下班,休息分钟,日工时,加班小时,状态,问题\n张伟,2026-06-22,09:00,18:00,60,8.00,0.00,正常,\n张伟,2026-06-23,14:00,次日 00:30,60,9.50,1.50,加班,\n张伟,2026-06-24,09:00,18:00,60,8.00,0.00,正常,\n张伟,2026-06-25,09:00,18:00,60,8.00,0.00,正常,\n张伟,2026-06-26,09:00,18:00,60,8.00,0.00,正常,\n李娜,2026-06-22,09:00,18:00,60,8.00,0.00,正常,\n李娜,2026-06-23,09:00,18:00,60,8.00,0.00,正常,\n李娜,2026-06-24,09:00,21:30,60,11.50,3.50,超限,E_ATT_OVER_LIMIT\n李娜,2026-06-25,09:00,18:00,60,8.00,0.00,正常,\n李娜,2026-06-26,09:00,18:00,60,8.00,0.00,正常,\n王强,2026-06-22,09:00,18:00,60,8.00,0.00,正常,\n王强,2026-06-23,09:00,18:00,60,8.00,0.00,正常,\n王强,2026-06-24,09:00,18:00,60,8.00,0.00,正常,\n王强,2026-06-25,09:00,,60,0.00,0.00,缺卡,E_ATT_MISSING_PUNCH\n王强,2026-06-26,09:00,18:00,60,8.00,0.00,正常,\n刘洋,2026-06-22,09:00,18:00,60,8.00,0.00,正常,\n刘洋,2026-06-23,09:00,18:00,60,8.00,0.00,正常,\n刘洋,2026-06-24,09:00,18:00,60,8.00,0.00,正常,\n刘洋,2026-06-25,09:00,18:00,60,8.00,0.00,正常,\n刘洋,2026-06-26,09:00,17:30,30,8.00,0.00,休息不足,E_ATT_REST_SHORT\n陈静,2026-06-22,09:00,18:00,60,8.00,0.00,正常,\n陈静,2026-06-23,09:00,18:00,60,8.00,0.00,正常,\n陈静,2026-06-24,09:00,18:00,60,8.00,0.00,正常,\n陈静,2026-06-25,09:00,18:00,60,8.00,0.00,正常,\n陈静,2026-06-26,09:00,18:00,60,8.00,0.00,正常,\n赵磊,2026-06-22,09:00,18:00,60,8.00,0.00,正常,\n赵磊,2026-06-23,09:00,18:00,60,8.00,0.00,正常,\n赵磊,2026-06-24,09:00,18:00,60,8.00,0.00,正常,\n赵磊,2026-06-25,09:00,18:00,60,8.00,0.00,正常,\n赵磊,2026-06-26,09:00,18:00,60,8.00,0.00,正常,\n"
+    }
+  }
+}
