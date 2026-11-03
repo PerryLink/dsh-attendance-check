@@ -1,17 +1,11 @@
 import path from 'node:path'
 import { defineTool } from '@deepseek-ai/dsh-tools'
-import {
-  buildAttendanceCheck,
-  type AttendanceReport,
-  type ViolationKind,
-  type ViolationScope,
-  type ViolationSeverity,
-} from '../core/check.js'
+import { buildAttendanceCheck, type AttendanceReport } from '../core/check.js'
 import { defaultExportFilename, writeAttendanceExport, type AttendanceExportResult } from '../core/export.js'
 import { ingestAttendanceCsv } from '../core/ingest.js'
 import type { AttendancePolicyInput } from '../core/rules.js'
 import { readAttendanceSource } from '../core/source.js'
-import { buildAttendanceSummary, type AttendanceSummary, type AttendanceSummaryRow } from '../core/summary.js'
+import { buildAttendanceSummary, type AttendanceSummary } from '../core/summary.js'
 import { formatHours } from '../core/time.js'
 
 export interface ToolDeps {
@@ -315,6 +309,3 @@ export function createTools(deps: ToolDeps) {
 
   return [check, summary, exportTool]
 }
-
-/** Re-export the report shape for tests and downstream typing. */
-export type { AttendanceSummaryRow, ViolationKind, ViolationScope, ViolationSeverity }

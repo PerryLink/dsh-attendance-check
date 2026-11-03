@@ -151,7 +151,7 @@ Public/synthetic fixtures live in `samples/quickstart/`; `ACCEPTANCE.csv` record
 
 ## Version
 
-`0.1.0-alpha.1` · 134 tests pass (`node --test test/*.test.mjs`).
+`0.1.0` · 134 tests pass (`node --test test/*.test.mjs`).
 
 > ⭐ If this helps, a star makes it easier for the next person to find it. Nothing is gated behind it.
 

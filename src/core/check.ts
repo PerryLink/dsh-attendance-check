@@ -1,5 +1,5 @@
 import { formatIsoDate, formatIsoMonth, isWeekend, parseIsoDate, weekdayLabel, workdaysBetween } from './date.js'
-import { AttendanceError } from './errors.js'
+import { AttendanceError, type AttendanceIssueCode } from './errors.js'
 import type { PunchRecord, AttendanceLedger } from './ingest.js'
 import {
   policyMinutes,
@@ -8,13 +8,12 @@ import {
   type AttendancePolicyInput,
   type PolicyMinutes,
 } from './rules.js'
-import { formatClockMinutes, formatHours, minutesToHours, parseClockTime, shiftSpanMinutes } from './time.js'
+import { formatClockMinutes, formatHours, parseClockTime, shiftSpanMinutes } from './time.js'
 
 export type AttendanceDayStatus = 'normal' | 'overtime' | 'over_limit' | 'rest_short' | 'missing_punch' | 'holiday'
 export type ViolationSeverity = 'high' | 'medium' | 'low'
 export type ViolationKind = 'missing_punch' | 'over_limit' | 'rest_short'
 export type ViolationScope = 'day' | 'month'
-export type AttendanceIssueCode = 'E_ATT_MISSING_PUNCH' | 'E_ATT_OVER_LIMIT' | 'E_ATT_REST_SHORT'
 
 export interface AttendanceDay {
   date: string
@@ -405,9 +404,4 @@ export function buildAttendanceCheck(
     violations,
     totals,
   }
-}
-
-/** Convenience: overtime in hours for renders and summaries. */
-export function overtimeHours(minutes: number): number {
-  return minutesToHours(minutes)
 }

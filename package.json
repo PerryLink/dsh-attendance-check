@@ -1,6 +1,6 @@
 {
   "name": "dsh-attendance-check",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0",
   "description": "Attendance and overtime reconciliation from a local punch CSV: daily hours, overtime, over-limit days, missing punches, short breaks, monthly cap flags and a reconciliation CSV; local files only.",
   "type": "module",
   "main": "./lib/plugin/index.js",

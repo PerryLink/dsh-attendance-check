@@ -151,7 +151,7 @@ node samples/quickstart/run.mjs --check
 
 ## 版本
 
-`0.1.0-alpha.1` · 134 项测试通过（`node --test test/*.test.mjs`）。
+`0.1.0` · 134 项测试通过（`node --test test/*.test.mjs`）。
 
 > ⭐ 如果这个包对你有帮助，点一颗星能让下一个人更容易找到它。没有任何功能以点星为条件。
 
