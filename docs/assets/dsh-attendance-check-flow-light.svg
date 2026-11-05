@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-label="dsh-attendance-check pipeline">
+<title>dsh-attendance-check pipeline</title>
+<rect width="1200" height="400" rx="18" fill="#ffffff"/>
+<text x="60" y="62" fill="#1f2328" font-family="ui-sans-serif,system-ui,sans-serif" font-size="30" font-weight="700">dsh-attendance-check</text>
+<text x="60" y="94" fill="#57606a" font-family="ui-monospace,monospace" font-size="16">punch CSV audit · daily hours + overtime + violations · no network, no model call, no upload</text>
+<line x1="60" y1="116" x2="1140" y2="116" stroke="#d0d7de"/>
+<rect x="60" y="150" width="190" height="96" rx="14" fill="#f6f8fa" stroke="#d0d7de" stroke-width="2"/>
+<text x="155" y="190" fill="#1f2328" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">punch CSV</text>
+<text x="155" y="218" fill="#57606a" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12">local · read-only</text>
+<path d="M256 198h28" stroke="#57606a" stroke-width="3"/>
+<path d="M282 191l10 7-10 7" fill="none" stroke="#57606a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="290" y="150" width="190" height="96" rx="14" fill="#f6f8fa" stroke="#4B67B4" stroke-width="2"/>
+<text x="385" y="190" fill="#1f2328" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">attendance.check</text>
+<text x="385" y="218" fill="#57606a" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12">daily audit</text>
+<path d="M486 198h28" stroke="#57606a" stroke-width="3"/>
+<path d="M512 191l10 7-10 7" fill="none" stroke="#57606a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="520" y="150" width="190" height="96" rx="14" fill="#f6f8fa" stroke="#4B67B4" stroke-width="2"/>
+<text x="615" y="190" fill="#1f2328" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">attendance.summary</text>
+<text x="615" y="218" fill="#57606a" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12">monthly rollup</text>
+<path d="M716 198h28" stroke="#57606a" stroke-width="3"/>
+<path d="M742 191l10 7-10 7" fill="none" stroke="#57606a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="750" y="150" width="190" height="96" rx="14" fill="#f6f8fa" stroke="#4B67B4" stroke-width="2"/>
+<text x="845" y="190" fill="#1f2328" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">attendance.export</text>
+<text x="845" y="218" fill="#57606a" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12">reconciliation CSV</text>
+<path d="M946 198h28" stroke="#57606a" stroke-width="3"/>
+<path d="M972 191l10 7-10 7" fill="none" stroke="#57606a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="980" y="150" width="190" height="96" rx="14" fill="#f6f8fa" stroke="#16a34a" stroke-width="2"/>
+<text x="1075" y="190" fill="#1f2328" text-anchor="middle" font-family="ui-monospace,monospace" font-size="16" font-weight="700">$DSH_HOME/exports</text>
+<text x="1075" y="218" fill="#57606a" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12">sha256 receipt</text>
+<path d="M385 246v39" stroke="#4B67B4" stroke-width="2" stroke-dasharray="5 5"/>
+<path d="M845 246v39" stroke="#4B67B4" stroke-width="2" stroke-dasharray="5 5"/>
+<rect x="290" y="285" width="650" height="52" rx="12" fill="#f6f8fa" stroke="#4B67B4" stroke-width="2"/>
+<text x="615" y="318" fill="#1f2328" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14">policy · standard_hours 8 · daily_overtime_cap 3h · monthly_overtime_cap 36h · min_break 60m</text>
+<text x="60" y="378" fill="#57606a" font-family="ui-monospace,monospace" font-size="13">violations: E_ATT_MISSING_PUNCH · E_ATT_OVER_LIMIT · E_ATT_REST_SHORT — severity sorted, never an abort</text>
+</svg>

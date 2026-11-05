@@ -45,26 +45,22 @@ for (const entry of [
   'TROUBLESHOOTING.md',
   'screenshots.json',
   'README.md',
-  'README-zh.md',
-  'README-es.md',
-  'README-pt.md',
-  'README-hi.md',
   'LICENSE',
   'NOTICE',
 ]) {
   check(files.includes(entry), `files[] must include ${entry}`)
 }
 
-const readmeZh = read('README-zh.md')
-const readme = read('README.md')
+const readmeZh = read('README.md')
+const readme = read('README.en.md')
 const troubleshooting = read('TROUBLESHOOTING.md')
 const versionPattern = new RegExp(pkg.version.replace(/\./g, '\\.'))
 for (const [label, text, patterns] of [
   [
-    'README-zh',
+    'README (zh)',
     readmeZh,
     [
-      /一句话/,
+      /它是什么/,
       /适合[\s\S]*不适合/,
       /## 输入/,
       /## 输出/,
@@ -75,18 +71,18 @@ for (const [label, text, patterns] of [
     ],
   ],
   [
-    'README',
+    'README.en',
     readme,
-    [/One-liner/i, /Fit/i, /## Input/i, /## Output/i, /## Example/i, /## Permissions/i, /FAQ/i, versionPattern],
+    [/What it is/i, /Fit/i, /## Input/i, /## Output/i, /## Example/i, /## Permissions/i, /FAQ/i, versionPattern],
   ],
 ]) {
   for (const pattern of patterns) check(pattern.test(text), `${label} is missing section matching ${pattern}`)
 }
 for (const pattern of [/读[:：]/, /写[:：]/, /联网[:：]/, /外部系统[:：]/]) {
-  check(pattern.test(readmeZh), `README-zh must declare ${pattern}`)
+  check(pattern.test(readmeZh), `README (zh) must declare ${pattern}`)
 }
-check(demo?.prompt && readmeZh.includes(demo.prompt.slice(0, 12)), 'README-zh must contain dsh.demo.prompt')
-check(/R0/.test(readmeZh) && /R1/.test(readmeZh), 'README-zh must mark R0/R1 risk levels')
+check(demo?.prompt && readmeZh.includes(demo.prompt.slice(0, 12)), 'README (zh) must contain dsh.demo.prompt')
+check(/R0/.test(readmeZh) && /R1/.test(readmeZh), 'README (zh) must mark R0/R1 risk levels')
 
 const REQUIRED_CODES = [
   'E_ATT_CSV_ROW',
