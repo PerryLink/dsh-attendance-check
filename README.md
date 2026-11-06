@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-flow-dark.svg">
-  <img src="docs/assets/dsh-attendance-check-flow-light.svg" width="100%" alt="dsh-attendance-check 流水线：本地打卡 CSV → attendance.check 逐日核对 → attendance.summary 月度汇总 → attendance.export 导出核对表 → $DSH_HOME/exports 下的 sha256 回执">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-hero-zh-dark.webp">
+  <img src="docs/assets/dsh-attendance-check-hero-zh-light.webp" width="100%" alt="dsh-attendance-check 配图：左侧是标题与默认规则，右侧把 4 条真实打卡记录画成 0–12 小时工时尺——8 小时标准与 11 小时单日上限两条规则线，逐行给出加班、超限、缺卡、休息不足的判定">
 </picture>
 
 # dsh-attendance-check
@@ -38,6 +38,11 @@ dsh plugin --profile <profile> add dsh-attendance-check
 
 - **适合**：几十到几万行的打卡明细；发薪前核对每人每日工时与加班；找出单日加班超过 3 小时、月加班超过 36 小时的员工；把「缺卡」「休息不足」「超限」列成可跟进的清单；给 HR / 财务一份可复核的核对表 CSV；跨零点夜班（`次日 HH:MM` / `24:00+`）的工时计算。
 - **不适合**：自动排班、审批加班申请或替代考勤系统；法定节假日日历（本包只识别周六/周日）；多段打卡（一天只支持一对上下班时间）；请假、调休、出差、外勤等假别折算；工资、加班费、个税或社保计算；PDF / 扫描件 / Excel 直接输入（请先导出 CSV）；联网同步打卡机或上传员工数据。
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-attendance-check-flow-v5-light.svg" width="100%" alt="结构图：打卡 CSV 与 policy 进入六道优先级闸门（周末跳过 → 缺卡 → 日超限 → 休息不足 → 节假日 → 加班 → 正常），issue 汇入按 30/25/20/10 排序的违规清单，月加班单独比 2160 分钟上限，最终出口是 attendance.summary 与 attendance.export">
+</picture>
 
 ## 三步上手
 
@@ -272,7 +277,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-当前版本 `0.1.0` · 134 项测试通过（`node --test test/*.test.mjs`）。配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python，hero 流程图为手写 SVG、深浅双版），可重复执行。
+当前版本 `0.1.0` · 134 项测试通过（`node --test test/*.test.mjs`）。配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python：hero 用 Pillow 绘制、结构图为手写 SVG，均为深浅双版），可重复执行。
 
 Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `attendance`, `overtime`, `timesheet`, `punch-clock`, `payroll`, `hr`, `csv`, `perrylink`
 

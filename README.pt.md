@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-flow-dark.svg">
-  <img src="docs/assets/dsh-attendance-check-flow-light.svg" width="100%" alt="Fluxo do dsh-attendance-check: CSV de ponto local → attendance.check auditoria diária → attendance.summary resumo mensal → attendance.export CSV de reconciliação → recibo sha256 em $DSH_HOME/exports">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-hero-en-dark.webp">
+  <img src="docs/assets/dsh-attendance-check-hero-en-light.webp" width="100%" alt="Imagem do dsh-attendance-check: quatro marcações reais desenhadas como uma régua de 0–12 h trabalhadas com as linhas de regra de 8 h padrão e 11 h de teto diário, terminando no veredito de hora extra, acima do limite, marcação ausente e intervalo curto">
 </picture>
 
 # dsh-attendance-check
@@ -38,6 +38,11 @@ Importa um registro local de ponto (funcionário, data, entrada, saída, minutos
 
 - **Serve para:** dezenas até dezenas de milhares de linhas de ponto; conferir horas diárias e extras antes da folha; encontrar funcionários acima do teto diário de 3 horas ou do teto mensal de 36 horas; transformar marcações faltantes, intervalos insuficientes e dias acima do limite numa lista de acompanhamento; entregar ao RH ou ao financeiro um CSV de reconciliação revisável; turnos que cruzam a meia-noite escritos como `次日 HH:MM` ou `24:00+`.
 - **Não serve para:** escalonamento de turnos, aprovação de horas extras ou substituição de um sistema de ponto; calendário de feriados oficiais (apenas sábado e domingo são reconhecidos); múltiplos pares de marcações por dia; conversão de licenças, compensações, viagens ou trabalho externo; cálculo de salários, pagamento de horas extras, impostos ou previdência; PDF, digitalizações ou Excel como entrada direta (exporte para CSV primeiro); sincronizar um relógio de ponto ou enviar dados de funcionários.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-attendance-check-flow-v5-light.svg" width="100%" alt="Diagrama de estrutura: o CSV de ponto e a política alimentam seis portões de prioridade (fim de semana → marcação ausente → teto diário → intervalo curto → feriado → hora extra → normal); os avisos entram numa lista ordenada 30/25/20/10, as horas extras mensais são comparadas ao teto de 2160 minutos e a auditoria sai como attendance.summary e attendance.export">
+</picture>
 
 ## Instalação em três passos
 
@@ -272,7 +277,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-Versão atual `0.1.0` · 134 testes aprovados (`node --test test/*.test.mjs`). As imagens do README são geradas programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python; o diagrama de fluxo hero é um SVG escrito à mão em variantes clara e escura) e pode ser reexecutado a qualquer momento.
+Versão atual `0.1.0` · 134 testes aprovados (`node --test test/*.test.mjs`). As imagens do README são geradas programaticamente por [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python: o hero é desenhado com Pillow e o diagrama de estrutura é um SVG escrito à mão; ambos em variante clara e escura) e pode ser reexecutado a qualquer momento.
 
 Tópicos: `deepseek-harness`, `dsh`, `dsh-plugin`, `attendance`, `overtime`, `timesheet`, `punch-clock`, `payroll`, `hr`, `csv`, `perrylink`
 

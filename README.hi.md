@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-flow-dark.svg">
-  <img src="docs/assets/dsh-attendance-check-flow-light.svg" width="100%" alt="dsh-attendance-check पाइपलाइन: लोकल पंच CSV → attendance.check दैनिक ऑडिट → attendance.summary मासिक सारांश → attendance.export समाधान CSV → $DSH_HOME/exports में sha256 रसीद">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-hero-en-dark.webp">
+  <img src="docs/assets/dsh-attendance-check-hero-en-light.webp" width="100%" alt="dsh-attendance-check चित्र: चार वास्तविक पंच पंक्तियाँ 0–12 घंटे के कार्य-घंटे पैमाने पर, 8 घंटे मानक और 11 घंटे दैनिक सीमा की रेखाओं के साथ, अंत में ओवरटाइम, सीमा पार, छूटी पंच और कम विश्राम का निर्णय">
 </picture>
 
 # dsh-attendance-check
@@ -38,6 +38,11 @@ dsh plugin --profile <profile> add dsh-attendance-check
 
 - **उपयुक्त:** दर्जनों से लेकर हज़ारों पंच पंक्तियाँ; पेरोल से पहले दैनिक घंटे और ओवरटाइम की जांच; 3 घंटे की दैनिक सीमा या 36 घंटे की मासिक सीमा से ऊपर के कर्मचारियों को खोजना; गायब पंच, छोटे ब्रेक और सीमा-अधिक दिनों को फॉलो-अप सूची में बदलना; HR या फाइनेंस को समीक्षा योग्य समाधान CSV देना; `次日 HH:MM` या `24:00+` लिखी आधी-रात पार पाली की गणना।
 - **अनुपयुक्त:** शिफ़्ट शेड्यूलिंग, ओवरटाइम अनुमोदन या टाइम-एंड-अटेंडेंस सिस्टम की जगह; सरकारी अवकाश कैलेंडर (केवल शनिवार/रविवार मान्य); प्रतिदिन कई पंच जोड़े; छुट्टी, कम्प-टाइम, दौरे या फ़ील्ड-वर्क रूपांतरण; वेतन, ओवरटाइम-भुगतान, कर या सामाजिक-सुरक्षा गणना; PDF, स्कैन या Excel सीधे इनपुट (पहले CSV निकालें); पंच डिवाइस सिंक करना या कर्मचारी डेटा अपलोड करना।
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-attendance-check-flow-v5-light.svg" width="100%" alt="संरचना आरेख: पंच CSV और नीति छह प्राथमिकता द्वारों में जाते हैं (सप्ताहांत छोड़ें → छूटी पंच → दैनिक सीमा → कम विश्राम → अवकाश → ओवरटाइम → सामान्य); समस्याएँ 30/25/20/10 क्रम की सूची में आती हैं, मासिक ओवरटाइम 2160 मिनट की सीमा से तुलना होती है, और ऑडिट attendance.summary तथा attendance.export के रूप में निकलता है">
+</picture>
 
 ## तीन चरणों में शुरुआत
 
@@ -272,7 +277,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-वर्तमान संस्करण `0.1.0` · 134 टेस्ट पास (`node --test test/*.test.mjs`)। README चित्र [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) द्वारा प्रोग्रामेटिक रूप से बनाए जाते हैं (Python; hero पाइपलाइन आरेख हल्की और गहरी दो variant वाला हस्तलिखित SVG है) और कभी भी दोबारा चलाया जा सकता है।
+वर्तमान संस्करण `0.1.0` · 134 टेस्ट पास (`node --test test/*.test.mjs`)। README चित्र [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) द्वारा प्रोग्रामेटिक रूप से बनाए जाते हैं (Python: hero Pillow से बनाया जाता है और संरचना आरेख हस्तलिखित SVG है; दोनों हल्की और गहरी variant में) और कभी भी दोबारा चलाया जा सकता है।
 
 विषय: `deepseek-harness`, `dsh`, `dsh-plugin`, `attendance`, `overtime`, `timesheet`, `punch-clock`, `payroll`, `hr`, `csv`, `perrylink`
 

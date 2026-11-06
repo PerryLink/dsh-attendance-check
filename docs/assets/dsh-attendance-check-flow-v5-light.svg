@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="660" viewBox="0 0 1100 660" role="img" aria-labelledby="flowTitle flowDesc"><title id="flowTitle">dsh-attendance-check day-state cascade</title><desc id="flowDesc">Six short-circuit gates judge each punch row into one day state; issues are ranked 30/25/20/10 and the monthly cap is checked separately; the audit exits as attendance.summary and attendance.export.</desc><defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f9f6fd"/><stop offset="1" stop-color="#e4eaf8"/></linearGradient></defs><rect width="1100" height="660" rx="20" fill="url(#bg)"/>
+<text x="40" y="46" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="25" font-weight="700" fill="#181d2d" text-anchor="start">Day-state cascade → ranked violations</text>
+<text x="1060" y="46" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="end">6 employees · 30 rows · 2026-06-22 → 06-26</text>
+<text x="40" y="70" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="14" font-weight="400" fill="#68748e" text-anchor="start">Six short-circuit gates in evaluateRecord order — yes → state, no ↓ next gate. Issues never abort; only bad CSV, date, time, break or policy do.</text>
+<rect x="40" y="88" width="228" height="170" rx="16" fill="#ffffff" stroke="#d7def1" stroke-width="1.3"/>
+<text x="56" y="116" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="17.0" font-weight="700" fill="#181d2d" text-anchor="start">INPUT · punch CSV</text>
+<text x="56" y="135" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="start">read-only · UTF-8 · ≤ 20 MB</text>
+<circle cx="60" cy="160" r="2.4" fill="(146, 156, 178)"/>
+<text x="70" y="164" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="13" font-weight="400" fill="#424e68" text-anchor="start">employee</text>
+<circle cx="60" cy="180" r="2.4" fill="(146, 156, 178)"/>
+<text x="70" y="184" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="13" font-weight="400" fill="#424e68" text-anchor="start">date</text>
+<circle cx="60" cy="200" r="2.4" fill="(146, 156, 178)"/>
+<text x="70" y="204" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="13" font-weight="400" fill="#424e68" text-anchor="start">clock_in</text>
+<circle cx="60" cy="220" r="2.4" fill="(146, 156, 178)"/>
+<text x="70" y="224" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="13" font-weight="400" fill="#424e68" text-anchor="start">clock_out</text>
+<circle cx="60" cy="240" r="2.4" fill="(146, 156, 178)"/>
+<text x="70" y="244" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="13" font-weight="400" fill="#424e68" text-anchor="start">break_minutes</text>
+<rect x="40" y="274" width="228" height="180" rx="16" fill="#ffffff" stroke="#d7def1" stroke-width="1.3"/>
+<text x="56" y="302" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="17.0" font-weight="700" fill="#181d2d" text-anchor="start">POLICY</text>
+<text x="56" y="321" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="start">per-call parameters</text>
+<text x="54" y="350" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="12.0" font-weight="400" fill="#68748e" text-anchor="start">standard_hours</text>
+<text x="254" y="350" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="13.5" font-weight="700" fill="#4b67b4" text-anchor="end">8</text>
+<text x="54" y="374" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="12.0" font-weight="400" fill="#68748e" text-anchor="start">daily_overtime_cap_hours</text>
+<text x="254" y="374" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="13.5" font-weight="700" fill="#4b67b4" text-anchor="end">3</text>
+<text x="54" y="398" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="11.0" font-weight="400" fill="#68748e" text-anchor="start">monthly_overtime_cap_hours</text>
+<text x="254" y="398" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="13.5" font-weight="700" fill="#4b67b4" text-anchor="end">36</text>
+<text x="54" y="422" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="12.0" font-weight="400" fill="#68748e" text-anchor="start">min_break_minutes</text>
+<text x="254" y="422" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="13.5" font-weight="700" fill="#4b67b4" text-anchor="end">60</text>
+<text x="54" y="446" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="12.0" font-weight="400" fill="#68748e" text-anchor="start">include_holidays</text>
+<text x="254" y="446" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="13.5" font-weight="700" fill="#4b67b4" text-anchor="end">false</text>
+<rect x="300" y="88" width="252" height="44" rx="12" fill="#f5f8fd" stroke="#d5dcf0" stroke-width="1.2"/>
+<circle cx="314" cy="110" r="9" fill="#e2e7f3"/>
+<text x="314" y="114" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="11.5" font-weight="700" fill="#4b67b4" text-anchor="middle">1</text>
+<text x="330" y="115" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="14" font-weight="400" fill="#181d2d" text-anchor="start">weekend &amp;&amp; !include_holidays</text>
+<line x1="552" y1="110" x2="559.0" y2="110.0" stroke="#7f899f" stroke-width="1.6" stroke-linecap="round"/><polygon points="564.0,110.0 559.0,112.8 559.0,107.2" fill="#7f899f"/>
+<rect x="568" y="88" width="176" height="44" rx="12" fill="#f0f1f4" stroke="#a4acbb" stroke-width="1.3"/>
+<text x="580" y="108" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="15.5" font-weight="700" fill="#68748e" text-anchor="start">skipped weekend</text>
+<text x="580" y="125" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="start">skipped_holiday_rows</text>
+<rect x="300" y="142" width="252" height="44" rx="12" fill="#f5f8fd" stroke="#d5dcf0" stroke-width="1.2"/>
+<circle cx="314" cy="164" r="9" fill="#e2e7f3"/>
+<text x="314" y="168" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="11.5" font-weight="700" fill="#4b67b4" text-anchor="middle">2</text>
+<text x="330" y="169" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="14" font-weight="400" fill="#181d2d" text-anchor="start">clock_in or clock_out empty</text>
+<line x1="552" y1="164" x2="559.0" y2="164.0" stroke="#7f899f" stroke-width="1.6" stroke-linecap="round"/><polygon points="564.0,164.0 559.0,166.8 559.0,161.2" fill="#7f899f"/>
+<rect x="568" y="142" width="176" height="44" rx="12" fill="#f0edf8" stroke="#a394d4" stroke-width="1.3"/>
+<text x="580" y="162" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="15.5" font-weight="700" fill="#664cb8" text-anchor="start">missing_punch</text>
+<text x="580" y="179" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="start">high · rank 30</text>
+<circle cx="731" cy="155" r="3.2" fill="(102, 76, 184)"/>
+<rect x="300" y="196" width="252" height="44" rx="12" fill="#f5f8fd" stroke="#d5dcf0" stroke-width="1.2"/>
+<circle cx="314" cy="218" r="9" fill="#e2e7f3"/>
+<text x="314" y="222" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="11.5" font-weight="700" fill="#4b67b4" text-anchor="middle">3</text>
+<text x="330" y="223" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="14" font-weight="400" fill="#181d2d" text-anchor="start">overtime &gt; 180 min</text>
+<line x1="552" y1="218" x2="559.0" y2="218.0" stroke="#7f899f" stroke-width="1.6" stroke-linecap="round"/><polygon points="564.0,218.0 559.0,220.8 559.0,215.2" fill="#7f899f"/>
+<rect x="568" y="196" width="176" height="44" rx="12" fill="#f8ecea" stroke="#d68e80" stroke-width="1.3"/>
+<text x="580" y="216" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="15.5" font-weight="700" fill="#ba422c" text-anchor="start">over_limit (day)</text>
+<text x="580" y="233" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="start">medium · rank 20</text>
+<circle cx="731" cy="209" r="3.2" fill="(186, 66, 44)"/>
+<rect x="300" y="250" width="252" height="44" rx="12" fill="#f5f8fd" stroke="#d5dcf0" stroke-width="1.2"/>
+<circle cx="314" cy="272" r="9" fill="#e2e7f3"/>
+<text x="314" y="276" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="11.5" font-weight="700" fill="#4b67b4" text-anchor="middle">4</text>
+<text x="330" y="277" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="14" font-weight="400" fill="#181d2d" text-anchor="start">break &lt; 60 min</text>
+<line x1="552" y1="272" x2="559.0" y2="272.0" stroke="#7f899f" stroke-width="1.6" stroke-linecap="round"/><polygon points="564.0,272.0 559.0,274.8 559.0,269.2" fill="#7f899f"/>
+<rect x="568" y="250" width="176" height="44" rx="12" fill="#e7f1f0" stroke="#6fada8" stroke-width="1.3"/>
+<text x="580" y="270" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="15.5" font-weight="700" fill="#0f766e" text-anchor="start">rest_short</text>
+<text x="580" y="287" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="start">low · rank 10</text>
+<circle cx="731" cy="263" r="3.2" fill="(15, 118, 110)"/>
+<rect x="300" y="304" width="252" height="44" rx="12" fill="#f5f8fd" stroke="#d5dcf0" stroke-width="1.2"/>
+<circle cx="314" cy="326" r="9" fill="#e2e7f3"/>
+<text x="314" y="330" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="11.5" font-weight="700" fill="#4b67b4" text-anchor="middle">5</text>
+<text x="330" y="331" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="14" font-weight="400" fill="#181d2d" text-anchor="start">weekend &amp;&amp; include_holidays</text>
+<line x1="552" y1="326" x2="559.0" y2="326.0" stroke="#7f899f" stroke-width="1.6" stroke-linecap="round"/><polygon points="564.0,326.0 559.0,328.8 559.0,323.2" fill="#7f899f"/>
+<rect x="568" y="304" width="176" height="44" rx="12" fill="#ebeff8" stroke="#859dd4" stroke-width="1.3"/>
+<text x="580" y="324" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="15.5" font-weight="700" fill="#345cb8" text-anchor="start">holiday</text>
+<text x="580" y="341" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="11.0" font-weight="400" fill="#68748e" text-anchor="start">0h standard, all overtime</text>
+<rect x="300" y="358" width="252" height="44" rx="12" fill="#f5f8fd" stroke="#d5dcf0" stroke-width="1.2"/>
+<circle cx="314" cy="380" r="9" fill="#e2e7f3"/>
+<text x="314" y="384" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="11.5" font-weight="700" fill="#4b67b4" text-anchor="middle">6</text>
+<text x="330" y="385" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="14" font-weight="400" fill="#181d2d" text-anchor="start">overtime &gt; 0</text>
+<line x1="552" y1="380" x2="559.0" y2="380.0" stroke="#7f899f" stroke-width="1.6" stroke-linecap="round"/><polygon points="564.0,380.0 559.0,382.8 559.0,377.2" fill="#7f899f"/>
+<rect x="568" y="358" width="176" height="44" rx="12" fill="#f6f1e8" stroke="#cba974" stroke-width="1.3"/>
+<text x="580" y="378" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="15.5" font-weight="700" fill="#a87018" text-anchor="start">overtime</text>
+<text x="580" y="395" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="start">no issue</text>
+<path d="M426.0 402 V434 H556" fill="none" stroke="(127, 137, 159)" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="556" y1="434" x2="561.0" y2="434.0" stroke="#7f899f" stroke-width="1.6" stroke-linecap="round"/><polygon points="566.0,434.0 561.0,436.8 561.0,431.2" fill="#7f899f"/>
+<text x="434.0" y="427" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="12.5" font-weight="400" fill="#929cb2" text-anchor="start">else</text>
+<rect x="568" y="412" width="176" height="44" rx="12" fill="#e8f2ef" stroke="#76b49d" stroke-width="1.3"/>
+<text x="580" y="432" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="15.5" font-weight="700" fill="#1a825c" text-anchor="start">normal</text>
+<text x="580" y="449" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="start">no issue</text>
+<line x1="426.0" y1="133" x2="426.0" y2="136.8" stroke="#959eb0" stroke-width="1.4" stroke-linecap="round"/><polygon points="426.0,141.0 423.7,136.8 428.3,136.8" fill="#959eb0"/>
+<line x1="426.0" y1="187" x2="426.0" y2="190.8" stroke="#959eb0" stroke-width="1.4" stroke-linecap="round"/><polygon points="426.0,195.0 423.7,190.8 428.3,190.8" fill="#959eb0"/>
+<line x1="426.0" y1="241" x2="426.0" y2="244.8" stroke="#959eb0" stroke-width="1.4" stroke-linecap="round"/><polygon points="426.0,249.0 423.7,244.8 428.3,244.8" fill="#959eb0"/>
+<line x1="426.0" y1="295" x2="426.0" y2="298.8" stroke="#959eb0" stroke-width="1.4" stroke-linecap="round"/><polygon points="426.0,303.0 423.7,298.8 428.3,298.8" fill="#959eb0"/>
+<line x1="426.0" y1="349" x2="426.0" y2="352.8" stroke="#959eb0" stroke-width="1.4" stroke-linecap="round"/><polygon points="426.0,357.0 423.7,352.8 428.3,352.8" fill="#959eb0"/>
+<rect x="764" y="88" width="296" height="278" rx="16" fill="#ffffff" stroke="#d7def1" stroke-width="1.3"/>
+<text x="780" y="116" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="17.0" font-weight="700" fill="#181d2d" text-anchor="start">violations[] ranked</text>
+<text x="780" y="135" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="start">3 hits · rank 30 &gt; 25 &gt; 20 &gt; 10</text>
+<rect x="782" y="152" width="36" height="36" rx="10" fill="#eae6f5" stroke="#ab9dd8" stroke-width="1.2"/>
+<text x="800" y="176" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="15" font-weight="700" fill="#664cb8" text-anchor="middle">30</text>
+<text x="828" y="168" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="13.5" font-weight="400" fill="#181d2d" text-anchor="start">missing_punch · high</text>
+<text x="828" y="186" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="start">Wang Qiang 06-25 · worked 0</text>
+<rect x="782" y="204" width="36" height="36" rx="10" fill="#f5e5e1" stroke="#d9978b" stroke-width="1.2"/>
+<text x="800" y="228" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="15" font-weight="700" fill="#ba422c" text-anchor="middle">25</text>
+<text x="828" y="220" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="13.5" font-weight="400" fill="#181d2d" text-anchor="start">monthly over_limit · high</text>
+<text x="828" y="238" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="start">not triggered: 210 ≤ 2160 min</text>
+<rect x="782" y="256" width="36" height="36" rx="10" fill="#f5e5e1" stroke="#d9978b" stroke-width="1.2"/>
+<text x="800" y="280" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="15" font-weight="700" fill="#ba422c" text-anchor="middle">20</text>
+<text x="828" y="272" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="13.5" font-weight="400" fill="#181d2d" text-anchor="start">over_limit (day) · medium</text>
+<text x="828" y="290" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="start">Li Na 06-24 · +30 min over</text>
+<rect x="782" y="308" width="36" height="36" rx="10" fill="#ddeceb" stroke="#7bb4af" stroke-width="1.2"/>
+<text x="800" y="332" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="15" font-weight="700" fill="#0f766e" text-anchor="middle">10</text>
+<text x="828" y="324" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="13.5" font-weight="400" fill="#181d2d" text-anchor="start">rest_short · low</text>
+<text x="828" y="342" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="start">Liu Yang 06-26 · break 30 min</text>
+<rect x="764" y="382" width="296" height="88" rx="16" fill="#ffffff" stroke="#d7def1" stroke-width="1.3"/>
+<text x="780" y="410" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="17.0" font-weight="700" fill="#181d2d" text-anchor="start">monthly cap 36h = 2160 min</text>
+<rect x="780" y="424" width="264" height="9" rx="4.5" fill="#d9e0f2"/>
+<rect x="780" y="424" width="26" height="9" rx="4.5" fill="#4b67b4"/>
+<text x="780" y="458" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="start">max 210 min (Li Na) · over_limit = false</text>
+<rect x="40" y="490" width="500" height="144" rx="16" fill="#ffffff" stroke="#d7def1" stroke-width="1.3"/>
+<text x="56" y="518" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="17.0" font-weight="700" fill="#181d2d" text-anchor="start">attendance.summary</text>
+<text x="524" y="518" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="12" font-weight="400" fill="#68748e" text-anchor="end">R0 · read-only</text>
+<text x="56" y="550" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="13" font-weight="400" fill="#424e68" text-anchor="start">6 rows = employee × month · expected 5 · attended 4 or 5</text>
+<text x="56" y="574" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="13" font-weight="400" fill="#424e68" text-anchor="start">overtime 300 min · anomalies 3 · monthly over_limit 0</text>
+<text x="56" y="600" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="12.5" font-weight="400" fill="#68748e" text-anchor="start">month=YYYY-MM filters a single month</text>
+<rect x="560" y="490" width="500" height="144" rx="16" fill="#ffffff" stroke="#d7def1" stroke-width="1.3"/>
+<text x="576" y="518" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="17.0" font-weight="700" fill="#181d2d" text-anchor="start">attendance.export</text>
+<text x="1044" y="518" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="12" font-weight="400" fill="#68748e" text-anchor="end">R1 · local write</text>
+<text x="576" y="550" font-family="'Microsoft YaHei','PingFang SC','Noto Sans CJK SC','Source Han Sans SC',sans-serif" font-size="13" font-weight="400" fill="#424e68" text-anchor="start">30 rows × 9 columns, one per audited employee-day</text>
+<text x="576" y="574" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="12.5" font-weight="400" fill="#424e68" text-anchor="start">员工,日期,上班,下班,休息分钟,日工时,加班小时,状态,问题</text>
+<text x="576" y="598" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="12" font-weight="400" fill="#68748e" text-anchor="start">→ $DSH_HOME/dsh-attendance-check/exports/</text>
+<text x="576" y="618" font-family="Consolas,'Cascadia Mono','SFMono-Regular',ui-monospace,monospace" font-size="12" font-weight="400" fill="#68748e" text-anchor="start">attendance-2026-06-22..26.csv · sha256 2a0c…a29f</text>
+<line x1="426" y1="460" x2="426.0" y2="480.8" stroke="#7f899f" stroke-width="1.7" stroke-linecap="round"/><polygon points="426.0,486.0 423.1,480.8 428.9,480.8" fill="#7f899f"/>
+<line x1="912" y1="476" x2="912.0" y2="480.8" stroke="#7f899f" stroke-width="1.7" stroke-linecap="round"/><polygon points="912.0,486.0 909.1,480.8 914.9,480.8" fill="#7f899f"/>
+</svg>

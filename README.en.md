@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-flow-dark.svg">
-  <img src="docs/assets/dsh-attendance-check-flow-light.svg" width="100%" alt="dsh-attendance-check pipeline: local punch CSV → attendance.check daily audit → attendance.summary monthly rollup → attendance.export reconciliation CSV → sha256 receipt under $DSH_HOME/exports">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-hero-en-dark.webp">
+  <img src="docs/assets/dsh-attendance-check-hero-en-light.webp" width="100%" alt="dsh-attendance-check hero: four real punch rows drawn as a 0–12h worked-hours ruler with the 8h standard and 11h daily-cap rule lines, ending in the overtime, over-limit, missing-punch and short-break verdicts">
 </picture>
 
 # dsh-attendance-check
@@ -38,6 +38,11 @@ Import a local punch ledger (employee, date, clock-in, clock-out, break minutes)
 
 - **Fits:** tens to tens of thousands of punch rows; checking daily hours and overtime before payroll; finding employees above the 3-hour daily cap or the 36-hour monthly cap; turning missing punches, short breaks and over-limit days into a follow-up list; handing HR or finance a reviewable reconciliation CSV; cross-midnight shifts written in the next-day or `24:00+` forms (see Input).
 - **Does not fit:** shift scheduling, overtime approval or replacing a time-and-attendance system; a statutory holiday calendar (only Saturday/Sunday is recognised); multiple punch pairs per day; leave, comp time, business-trip or field-work conversion; wage, overtime-pay, tax or social-insurance calculation; PDF, scans or Excel as direct input (export CSV first); syncing a punch device or uploading employee data.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-attendance-check-flow-v5-light.svg" width="100%" alt="Structure diagram: the punch CSV and policy feed six priority gates (weekend skip → missing punch → daily cap → short break → holiday → overtime → normal); issues join a list ranked 30/25/20/10, monthly overtime is compared with the 2160-minute cap, and the audit exits as attendance.summary and attendance.export">
+</picture>
 
 ## Three-step setup
 
@@ -301,7 +306,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-Current version `0.1.0` · 134 tests pass (`node --test test/*.test.mjs`). The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python; the hero pipeline diagram is a hand-written SVG in light and dark variants) and can be re-run at any time.
+Current version `0.1.0` · 134 tests pass (`node --test test/*.test.mjs`). The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python: the hero is drawn with Pillow, the structure diagram is a hand-written SVG; both in light and dark variants) and can be re-run at any time.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `attendance`, `overtime`, `timesheet`, `punch-clock`, `payroll`, `hr`, `csv`, `perrylink`
 
