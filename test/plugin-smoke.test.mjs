@@ -9,15 +9,15 @@ import { checkFor, exec, samplePath, summaryFor, toolMap } from './helpers/fixtu
 
 const baseDir = path.join(os.tmpdir(), 'dsh-attendance-check-smoke')
 
-test('createTools exposes the three attendance.* tools with unique names', () => {
+test('createTools exposes the three attendance_* tools with unique names', () => {
   const tools = createTools({ baseDir })
   assert.deepEqual(
     tools.map((tool) => tool.name),
-    ['attendance.check', 'attendance.summary', 'attendance.export'],
+    ['attendance_check', 'attendance_summary', 'attendance_export'],
   )
   assert.equal(new Set(tools.map((tool) => tool.name)).size, 3)
   for (const tool of tools) {
-    assert.ok(tool.name.startsWith('attendance.'))
+    assert.ok(tool.name.startsWith('attendance_'))
     assert.ok(tool.description.length > 0)
     assert.equal(typeof tool.execute, 'function')
     assert.equal(typeof tool.output.render, 'function')
@@ -51,7 +51,7 @@ test('apply() registers all three tools and writes the export under the override
   await plugin.apply({ tools: { register(tool) { registered.push(tool) } } })
   assert.equal(registered.length, 3)
 
-  const exporter = registered.find((tool) => tool.name === 'attendance.export')
+  const exporter = registered.find((tool) => tool.name === 'attendance_export')
   const result = await exporter.execute({ path: samplePath }, exec)
   assert.equal(result.rows, 30)
   assert.ok(result.path.startsWith(`${dir}${path.sep}exports${path.sep}`))
@@ -60,20 +60,20 @@ test('apply() registers all three tools and writes the export under the override
 test('every tool render returns exactly one text block', async () => {
   const tools = toolMap(baseDir)
   const check = await checkFor(tools)
-  const renderedCheck = tools['attendance.check'].output.render({ path: samplePath }, check)
+  const renderedCheck = tools['attendance_check'].output.render({ path: samplePath }, check)
   assert.equal(renderedCheck.length, 1)
   assert.equal(renderedCheck[0].type, 'text')
   assert.match(renderedCheck[0].text, /attendance check 2026-06-22\.\.2026-06-26: 6 employee\(s\) \/ 30 day\(s\)/)
   assert.match(renderedCheck[0].text, /5\.00h overtime; 3 violation\(s\)/)
 
   const summary = await summaryFor(tools)
-  const renderedSummary = tools['attendance.summary'].output.render({ path: samplePath }, summary)
+  const renderedSummary = tools['attendance_summary'].output.render({ path: samplePath }, summary)
   assert.equal(renderedSummary.length, 1)
   assert.match(renderedSummary[0].text, /attendance summary 2026-06: 6 employee-month row\(s\)/)
   assert.match(renderedSummary[0].text, /30 expected \/ 29 attended day\(s\)/)
 
-  const exported = await tools['attendance.export'].execute({ path: samplePath }, exec)
-  const renderedExport = tools['attendance.export'].output.render({ path: samplePath }, exported)
+  const exported = await tools['attendance_export'].execute({ path: samplePath }, exec)
+  const renderedExport = tools['attendance_export'].output.render({ path: samplePath }, exported)
   assert.equal(renderedExport.length, 1)
   assert.match(renderedExport[0].text, /attendance CSV 30 row\(s\) -> /)
   assert.match(renderedExport[0].text, /sha256 [0-9a-f]{12}\.\.\./)
@@ -81,8 +81,8 @@ test('every tool render returns exactly one text block', async () => {
 
 test('tool descriptions state the risk and the local-only boundary', () => {
   const tools = createTools({ baseDir })
-  const check = tools.find((tool) => tool.name === 'attendance.check')
-  const exporter = tools.find((tool) => tool.name === 'attendance.export')
+  const check = tools.find((tool) => tool.name === 'attendance_check')
+  const exporter = tools.find((tool) => tool.name === 'attendance_export')
   assert.match(check.description, /Read-only/)
   assert.match(exporter.description, /Local write only/)
 })

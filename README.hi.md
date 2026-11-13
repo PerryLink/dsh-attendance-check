@@ -41,7 +41,7 @@ dsh plugin --profile <profile> add dsh-attendance-check
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-flow-v5-dark.svg">
-  <img src="docs/assets/dsh-attendance-check-flow-v5-light.svg" width="100%" alt="संरचना आरेख: पंच CSV और नीति छह प्राथमिकता द्वारों में जाते हैं (सप्ताहांत छोड़ें → छूटी पंच → दैनिक सीमा → कम विश्राम → अवकाश → ओवरटाइम → सामान्य); समस्याएँ 30/25/20/10 क्रम की सूची में आती हैं, मासिक ओवरटाइम 2160 मिनट की सीमा से तुलना होती है, और ऑडिट attendance.summary तथा attendance.export के रूप में निकलता है">
+  <img src="docs/assets/dsh-attendance-check-flow-v5-light.svg" width="100%" alt="संरचना आरेख: पंच CSV और नीति छह प्राथमिकता द्वारों में जाते हैं (सप्ताहांत छोड़ें → छूटी पंच → दैनिक सीमा → कम विश्राम → अवकाश → ओवरटाइम → सामान्य); समस्याएँ 30/25/20/10 क्रम की सूची में आती हैं, मासिक ओवरटाइम 2160 मिनट की सीमा से तुलना होती है, और ऑडिट attendance_summary तथा attendance_export के रूप में निकलता है">
 </picture>
 
 ## तीन चरणों में शुरुआत
@@ -77,9 +77,9 @@ dsh plugin --profile <profile> add dsh-attendance-check
 
 | टूल | उद्देश्य | जोखिम |
 |---|---|---|
-| `attendance.check` | पंच CSV पढ़कर हर दिन ऑडिट करता है: दैनिक घंटे, ओवरटाइम, सीमा-अधिक दिन, गायब पंच, छोटे ब्रेक और गंभीरता-क्रमित उल्लंघन सूची | R0 (केवल-पठन) |
-| `attendance.summary` | प्रति कर्मचारी-माह अपेक्षित/उपस्थित दिन, ओवरटाइम, विसंगति संख्या और मासिक अधिकता फ़्लैग संक्षेपित करता है | R0 (केवल-पठन) |
-| `attendance.export` | दिन-स्तरीय समाधान CSV (कर्मचारी/तारीख/आगमन/प्रस्थान/ब्रेक/घंटे/ओवरटाइम/स्थिति/समस्या) लिखता है, पथ और sha256 लौटाता है | R1 (केवल exports में लोकल राइट) |
+| `attendance_check` | पंच CSV पढ़कर हर दिन ऑडिट करता है: दैनिक घंटे, ओवरटाइम, सीमा-अधिक दिन, गायब पंच, छोटे ब्रेक और गंभीरता-क्रमित उल्लंघन सूची | R0 (केवल-पठन) |
+| `attendance_summary` | प्रति कर्मचारी-माह अपेक्षित/उपस्थित दिन, ओवरटाइम, विसंगति संख्या और मासिक अधिकता फ़्लैग संक्षेपित करता है | R0 (केवल-पठन) |
+| `attendance_export` | दिन-स्तरीय समाधान CSV (कर्मचारी/तारीख/आगमन/प्रस्थान/ब्रेक/घंटे/ओवरटाइम/स्थिति/समस्या) लिखता है, पथ और sha256 लौटाता है | R1 (केवल exports में लोकल राइट) |
 
 - **दिन-स्तरीय ऑडिट:** दैनिक घंटे = जाने का समय − आने का समय − ब्रेक; आधी-रात पार पालियाँ (`次日 HH:MM` या `24:00+`) अगले दिन गिनी जाती हैं।
 - **सीमा-अधिकता पहचान:** 3 घंटे से अधिक दैनिक ओवरटाइम दिन को `over_limit` (medium) चिह्नित करता है; 36 घंटे से अधिक मासिक ओवरटाइम उस कर्मचारी-माह को `over_limit` (high) चिह्नित करता है।
@@ -116,14 +116,14 @@ node samples/quickstart/run.mjs --check
 
 ## आउटपुट
 
-- **`attendance.check`**: `{ period, source_sha256, policy, employees, violations, totals }`।
+- **`attendance_check`**: `{ period, source_sha256, policy, employees, violations, totals }`।
   - `period`: कवर की गई तारीखें, उस अवधि के सोमवार–शुक्रवार कार्यदिवस, छुए गए महीने।
   - `policy`: उपयोग की गई नियमावली (मानक घंटे, दैनिक सीमा, मासिक सीमा, न्यूनतम ब्रेक, अवकाश सम्मिलित)।
   - `employees[]`: प्रति कर्मचारी, `days[]` (तारीख, वार, पंच, ब्रेक, काम के मिनट, ओवरटाइम, अवकाश फ़्लैग, आधी-रात-पार फ़्लैग, गायब पक्ष, स्थिति, issue कोड), `worked_minutes`, `overtime_minutes`, `over_limit_days`, `over_limit_months`, `missing_punches`, `rest_short_days`, `skipped_holiday_days` और `monthly_overtime[]`।
   - `violations[]`: गंभीरता-क्रमित उल्लंघन — `severity`, `rank`, `kind`, `scope`, `code`, `employee`, `date`/`month`, `minutes` और चीनी `message`।
   - `totals`: कर्मचारी, ऑडिट किए दिन, छोड़ी गई सप्ताहांत पंक्तियाँ, काम और ओवरटाइम मिनट, सीमा-अधिक दिन/माह, गायब पंच, छोटे-ब्रेक दिन और कुल उल्लंघन।
-- **`attendance.summary`**: `{ period, source_sha256, policy, rows, totals }`। प्रति कर्मचारी-माह एक पंक्ति: `expected_days`, `attended_days`, `overtime_minutes` / `overtime_hours`, `anomaly_count`, `missing_punches`, `rest_short_days`, `over_limit_days` और `over_limit` (मासिक ओवरटाइम 36 घंटे से ऊपर)। वैकल्पिक `month=YYYY-MM` फ़िल्टर।
-- **`attendance.export`**: दिन-स्तरीय समाधान CSV को `$DSH_HOME/dsh-attendance-check/exports/` में कॉलम `员工,日期,上班,下班,休息分钟,日工时,加班小时,状态,问题` के साथ लिखता है; पथ, `sha256`, बाइट्स और पंक्ति संख्या लौटाता है। फ़ाइल नाम केवल `[A-Za-z0-9._-]` हो सकता है।
+- **`attendance_summary`**: `{ period, source_sha256, policy, rows, totals }`। प्रति कर्मचारी-माह एक पंक्ति: `expected_days`, `attended_days`, `overtime_minutes` / `overtime_hours`, `anomaly_count`, `missing_punches`, `rest_short_days`, `over_limit_days` और `over_limit` (मासिक ओवरटाइम 36 घंटे से ऊपर)। वैकल्पिक `month=YYYY-MM` फ़िल्टर।
+- **`attendance_export`**: दिन-स्तरीय समाधान CSV को `$DSH_HOME/dsh-attendance-check/exports/` में कॉलम `员工,日期,上班,下班,休息分钟,日工时,加班小时,状态,问题` के साथ लिखता है; पथ, `sha256`, बाइट्स और पंक्ति संख्या लौटाता है। फ़ाइल नाम केवल `[A-Za-z0-9._-]` हो सकता है।
 
 ## नियम
 
@@ -150,8 +150,8 @@ node samples/quickstart/run.mjs --check
 | `monthly_overtime_cap_hours` | `36` | मासिक ओवरटाइम सीमा घंटों में, सीमा 0–744 |
 | `min_break_minutes` | `60` | न्यूनतम ब्रेक मिनट, पूर्णांक 0–720 |
 | `include_holidays` | `false` | `true` पर सप्ताहांत पंक्तियाँ अवकाश-कार्य के रूप में ऑडिट होती हैं: मानक समय 0, सभी काम के मिनट ओवरटाइम, और दैनिक सीमा लागू रहती है |
-| `month` | (खाली) | केवल `attendance.summary`: `YYYY-MM`, एक महीना देखें |
-| `filename` | अवधि से व्युत्पन्न | केवल `attendance.export`: एक्सपोर्ट फ़ाइल नाम, केवल `[A-Za-z0-9._-]` |
+| `month` | (खाली) | केवल `attendance_summary`: `YYYY-MM`, एक महीना देखें |
+| `filename` | अवधि से व्युत्पन्न | केवल `attendance_export`: एक्सपोर्ट फ़ाइल नाम, केवल `[A-Za-z0-9._-]` |
 
 ## FAQ
 
@@ -165,7 +165,7 @@ node samples/quickstart/run.mjs --check
 <details>
 <summary>गायब पंच error क्यों नहीं है?</summary>
 
-वास्तविक उपस्थिति डेटा में गायब पंच आम बात है और एक गायब पंच को पूरा समाधान विफल नहीं करना चाहिए। इसे `missing_punch` दिन और एक `E_ATT_MISSING_PUNCH` issue के रूप में दर्ज किया जाता है, 0 काम के मिनट और 0 ओवरटाइम के साथ; `attendance.check` बाकी सबका परिणाम सामान्य रूप से लौटाता है ताकि HR पंच ठीक करके फिर चला सके। केवल विकृत CSV, तारीख, समय, ब्रेक या नियम ही कॉल को abort करते हैं।
+वास्तविक उपस्थिति डेटा में गायब पंच आम बात है और एक गायब पंच को पूरा समाधान विफल नहीं करना चाहिए। इसे `missing_punch` दिन और एक `E_ATT_MISSING_PUNCH` issue के रूप में दर्ज किया जाता है, 0 काम के मिनट और 0 ओवरटाइम के साथ; `attendance_check` बाकी सबका परिणाम सामान्य रूप से लौटाता है ताकि HR पंच ठीक करके फिर चला सके। केवल विकृत CSV, तारीख, समय, ब्रेक या नियम ही कॉल को abort करते हैं।
 
 </details>
 
@@ -204,7 +204,7 @@ node samples/quickstart/run.mjs --check
 - नेटवर्क: नहीं।
 - बाहरी सिस्टम: कोई नहीं।
 
-`attendance.check` और `attendance.summary` **R0** (केवल-पठन) हैं। `attendance.export` **R1** (केवल exports फ़ोल्डर में लोकल राइट) है। टेस्ट के लिए `DSH_ATTENDANCE_CHECK_HOME` लोकल राइट रूट बदल देता है; डिफ़ॉल्ट ठीक `$DSH_HOME/dsh-attendance-check` है।
+`attendance_check` और `attendance_summary` **R0** (केवल-पठन) हैं। `attendance_export` **R1** (केवल exports फ़ोल्डर में लोकल राइट) है। टेस्ट के लिए `DSH_ATTENDANCE_CHECK_HOME` लोकल राइट रूट बदल देता है; डिफ़ॉल्ट ठीक `$DSH_HOME/dsh-attendance-check` है।
 
 ## त्रुटियाँ
 
@@ -277,7 +277,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-वर्तमान संस्करण `0.1.0` · 134 टेस्ट पास (`node --test test/*.test.mjs`)। README चित्र [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) द्वारा प्रोग्रामेटिक रूप से बनाए जाते हैं (Python: hero Pillow से बनाया जाता है और संरचना आरेख हस्तलिखित SVG है; दोनों हल्की और गहरी variant में) और कभी भी दोबारा चलाया जा सकता है।
+वर्तमान संस्करण `0.2.0` · 135 टेस्ट पास (`node --test test/*.test.mjs`)। README चित्र [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) द्वारा प्रोग्रामेटिक रूप से बनाए जाते हैं (Python: hero Pillow से बनाया जाता है और संरचना आरेख हस्तलिखित SVG है; दोनों हल्की और गहरी variant में) और कभी भी दोबारा चलाया जा सकता है।
 
 विषय: `deepseek-harness`, `dsh`, `dsh-plugin`, `attendance`, `overtime`, `timesheet`, `punch-clock`, `payroll`, `hr`, `csv`, `perrylink`
 
@@ -285,7 +285,7 @@ node scripts/gate.mjs
 
 यह प्रोजेक्ट [PerryLink](https://github.com/PerryLink) द्वारा रखरखाव किए गए DeepSeek Harness प्लगइन परिवार का सदस्य है (सभी Apache-2.0)। अगर यह प्लगइन आपके काम आए, तो **एक स्टार अगले व्यक्ति को इसे खोजने में मदद करता है** — इसके पीछे कुछ भी लॉक नहीं है।
 
-- [@PerryLink](https://github.com/PerryLink) — निर्माता और रखरखावकर्ता: पंच-CSV ऑडिट पाइपलाइन, तीन टूल `attendance.check` / `attendance.summary` / `attendance.export`, quickstart गोल्डन नमूना और स्वीकृति साक्ष्य, तथा पाँच-भाषा दस्तावेज़।
+- [@PerryLink](https://github.com/PerryLink) — निर्माता और रखरखावकर्ता: पंच-CSV ऑडिट पाइपलाइन, तीन टूल `attendance_check` / `attendance_summary` / `attendance_export`, quickstart गोल्डन नमूना और स्वीकृति साक्ष्य, तथा पाँच-भाषा दस्तावेज़।
 
 ## लाइसेंस
 

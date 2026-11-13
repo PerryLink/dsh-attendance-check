@@ -41,7 +41,7 @@ dsh plugin --profile <profile> add dsh-attendance-check
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-flow-v5-dark.svg">
-  <img src="docs/assets/dsh-attendance-check-flow-v5-light.svg" width="100%" alt="结构图：打卡 CSV 与 policy 进入六道优先级闸门（周末跳过 → 缺卡 → 日超限 → 休息不足 → 节假日 → 加班 → 正常），issue 汇入按 30/25/20/10 排序的违规清单，月加班单独比 2160 分钟上限，最终出口是 attendance.summary 与 attendance.export">
+  <img src="docs/assets/dsh-attendance-check-flow-v5-light.svg" width="100%" alt="结构图：打卡 CSV 与 policy 进入六道优先级闸门（周末跳过 → 缺卡 → 日超限 → 休息不足 → 节假日 → 加班 → 正常），issue 汇入按 30/25/20/10 排序的违规清单，月加班单独比 2160 分钟上限，最终出口是 attendance_summary 与 attendance_export">
 </picture>
 
 ## 三步上手
@@ -77,9 +77,9 @@ dsh plugin --profile <profile> add dsh-attendance-check
 
 | 工具 | 用途 | 风险 |
 |---|---|---|
-| `attendance.check` | 读取打卡 CSV，按规则逐日核对，返回每人日工时、加班、超限日、缺卡、休息不足与排序后的违规清单 | R0（只读） |
-| `attendance.summary` | 按员工 × 月份汇总应出勤/实出勤/加班合计/异常次数与月超限标记 | R0（只读） |
-| `attendance.export` | 把逐日核对表写成 CSV（员工/日期/上班/下班/休息分钟/日工时/加班小时/状态/问题），返回路径与 sha256 | R1（仅本地写 exports 目录） |
+| `attendance_check` | 读取打卡 CSV，按规则逐日核对，返回每人日工时、加班、超限日、缺卡、休息不足与排序后的违规清单 | R0（只读） |
+| `attendance_summary` | 按员工 × 月份汇总应出勤/实出勤/加班合计/异常次数与月超限标记 | R0（只读） |
+| `attendance_export` | 把逐日核对表写成 CSV（员工/日期/上班/下班/休息分钟/日工时/加班小时/状态/问题），返回路径与 sha256 | R1（仅本地写 exports 目录） |
 
 - **逐日核对**：日工时 = 下班 − 上班 − 休息；跨零点夜班（`次日 HH:MM` 或 `24:00+`）按次日计算。
 - **超限识别**：单日加班超 3 小时记 `over_limit`（medium），月加班超 36 小时记 `over_limit`（high）。
@@ -116,14 +116,14 @@ node samples/quickstart/run.mjs --check
 
 ## 输出
 
-- **`attendance.check`**：`{ period, source_sha256, policy, employees, violations, totals }`。
+- **`attendance_check`**：`{ period, source_sha256, policy, employees, violations, totals }`。
   - `period`：核对覆盖的起止日期、区间内周一至周五天数、涉及月份。
   - `policy`：本次使用的规则（标准工时 / 单日上限 / 月上限 / 最少休息 / 是否含节假日）。
   - `employees[]`：每人的 `days[]`（日期、星期、上下班、休息、日工时、加班、是否节假日、是否跨零点、缺卡方向、状态、问题码）、`worked_minutes`、`overtime_minutes`、`over_limit_days`、`over_limit_months`、`missing_punches`、`rest_short_days`、`skipped_holiday_days` 与按月 `monthly_overtime[]`。
   - `violations[]`：按严重度排序的违规清单；每条含 `severity`、`rank`、`kind`、`scope`、`code`、`employee`、`date`/`month`、`minutes` 与中文 `message`。
   - `totals`：员工数、核对天数、跳过周末行数、总工时、总加班、超限日/月数、缺卡数、休息不足天数、违规总数。
-- **`attendance.summary`**：`{ period, source_sha256, policy, rows, totals }`。每个「员工 × 月份」一行：`expected_days`（应出勤）、`attended_days`（实出勤）、`overtime_minutes` / `overtime_hours`（加班合计）、`anomaly_count`（异常次数）、`missing_punches`、`rest_short_days`、`over_limit_days`、`over_limit`（月加班是否超 36h）。可选 `month=YYYY-MM` 只看一个月。
-- **`attendance.export`**：把逐日核对表写成 CSV 到 `$DSH_HOME/dsh-attendance-check/exports/`，列固定为 `员工,日期,上班,下班,休息分钟,日工时,加班小时,状态,问题`；返回路径、`sha256`、字节数与行数。文件名只允许 `[A-Za-z0-9._-]`。
+- **`attendance_summary`**：`{ period, source_sha256, policy, rows, totals }`。每个「员工 × 月份」一行：`expected_days`（应出勤）、`attended_days`（实出勤）、`overtime_minutes` / `overtime_hours`（加班合计）、`anomaly_count`（异常次数）、`missing_punches`、`rest_short_days`、`over_limit_days`、`over_limit`（月加班是否超 36h）。可选 `month=YYYY-MM` 只看一个月。
+- **`attendance_export`**：把逐日核对表写成 CSV 到 `$DSH_HOME/dsh-attendance-check/exports/`，列固定为 `员工,日期,上班,下班,休息分钟,日工时,加班小时,状态,问题`；返回路径、`sha256`、字节数与行数。文件名只允许 `[A-Za-z0-9._-]`。
 
 ## 规则
 
@@ -150,8 +150,8 @@ node samples/quickstart/run.mjs --check
 | `monthly_overtime_cap_hours` | `36` | 月加班上限（小时），范围 0–744 |
 | `min_break_minutes` | `60` | 最少休息分钟，范围 0–720 整数 |
 | `include_holidays` | `false` | `true` 时周末记录按节假日核对：标准工时为 0，全部已工作分钟计为加班，单日上限仍然生效 |
-| `month` | （空） | 仅 `attendance.summary`：`YYYY-MM`，只看一个月 |
-| `filename` | 按期间自动生成 | 仅 `attendance.export`：导出文件名，只允许 `[A-Za-z0-9._-]` |
+| `month` | （空） | 仅 `attendance_summary`：`YYYY-MM`，只看一个月 |
+| `filename` | 按期间自动生成 | 仅 `attendance_export`：导出文件名，只允许 `[A-Za-z0-9._-]` |
 
 ## FAQ
 
@@ -165,7 +165,7 @@ node samples/quickstart/run.mjs --check
 <details>
 <summary>缺卡为什么不是报错？</summary>
 
-缺卡在真实考勤里很常见，一次缺卡不应该让整份核对失败。本包把它记成当日 `missing_punch` 加一条 `E_ATT_MISSING_PUNCH` issue，日工时与加班记 0；`attendance.check` 照常返回其他人的结果，方便 HR 逐条补卡后重跑。只有 CSV、日期、时间、休息分钟或规则本身不合法时才会抛异常。
+缺卡在真实考勤里很常见，一次缺卡不应该让整份核对失败。本包把它记成当日 `missing_punch` 加一条 `E_ATT_MISSING_PUNCH` issue，日工时与加班记 0；`attendance_check` 照常返回其他人的结果，方便 HR 逐条补卡后重跑。只有 CSV、日期、时间、休息分钟或规则本身不合法时才会抛异常。
 
 </details>
 
@@ -204,7 +204,7 @@ node samples/quickstart/run.mjs --check
 - 联网：无。
 - 外部系统：无。
 
-`attendance.check` 与 `attendance.summary` 是 **R0**（只读）；`attendance.export` 是 **R1**（只在上述 exports 目录本地写入）。测试可用 `DSH_ATTENDANCE_CHECK_HOME` 覆盖本地写根，默认就是 `$DSH_HOME/dsh-attendance-check`。
+`attendance_check` 与 `attendance_summary` 是 **R0**（只读）；`attendance_export` 是 **R1**（只在上述 exports 目录本地写入）。测试可用 `DSH_ATTENDANCE_CHECK_HOME` 覆盖本地写根，默认就是 `$DSH_HOME/dsh-attendance-check`。
 
 ## 错误
 
@@ -277,7 +277,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-当前版本 `0.1.0` · 134 项测试通过（`node --test test/*.test.mjs`）。配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python：hero 用 Pillow 绘制、结构图为手写 SVG，均为深浅双版），可重复执行。
+当前版本 `0.2.0` · 135 项测试通过（`node --test test/*.test.mjs`）。配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python：hero 用 Pillow 绘制、结构图为手写 SVG，均为深浅双版），可重复执行。
 
 Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `attendance`, `overtime`, `timesheet`, `punch-clock`, `payroll`, `hr`, `csv`, `perrylink`
 
@@ -285,7 +285,7 @@ Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `attendance`, `overtime`, `tim
 
 本项目是 [PerryLink](https://github.com/PerryLink) 维护的 DeepSeek Harness 插件家族成员（全部 Apache-2.0）。如果这个插件帮到了你，**给个 star**——它不解锁任何功能，但会让下一个人更容易找到它。
 
-- [@PerryLink](https://github.com/PerryLink) —— 创建者与维护者：打卡 CSV 核对管线、`attendance.check` / `attendance.summary` / `attendance.export` 三个工具、quickstart 金标样例与验收证据、五语文档。
+- [@PerryLink](https://github.com/PerryLink) —— 创建者与维护者：打卡 CSV 核对管线、`attendance_check` / `attendance_summary` / `attendance_export` 三个工具、quickstart 金标样例与验收证据、五语文档。
 
 ## License
 

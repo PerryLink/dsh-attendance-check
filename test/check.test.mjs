@@ -166,7 +166,7 @@ test('an inverted shift is rejected with E_ATT_TIME_INVALID', async (t) => {
   const file = await writePunches(dir, 'inverted.csv', ['张伟,2026-06-22,09:00,08:00,60'])
   const tools = toolMap(dir)
   await assert.rejects(
-    () => tools['attendance.check'].execute({ path: file }, exec),
+    () => tools['attendance_check'].execute({ path: file }, exec),
     (error) => {
       assert.equal(error.code, 'E_ATT_TIME_INVALID')
       assert.match(error.message, /下班时间必须晚于上班时间/)
@@ -180,7 +180,7 @@ test('a break that consumes the whole shift is rejected with E_ATT_BREAK_INVALID
   const file = await writePunches(dir, 'break.csv', ['张伟,2026-06-22,09:00,10:00,60'])
   const tools = toolMap(dir)
   await assert.rejects(
-    () => tools['attendance.check'].execute({ path: file }, exec),
+    () => tools['attendance_check'].execute({ path: file }, exec),
     (error) => error.code === 'E_ATT_BREAK_INVALID',
   )
 })
@@ -189,7 +189,7 @@ test('custom rules flow through the report and change overtime', async (t) => {
   const dir = await makeTemp(t)
   const file = await writePunches(dir, 'standard.csv', ['张伟,2026-06-22,09:00,18:00,60'])
   const tools = toolMap(dir)
-  const report = await tools['attendance.check'].execute({ path: file, standard_hours: 7.5 }, exec)
+  const report = await tools['attendance_check'].execute({ path: file, standard_hours: 7.5 }, exec)
   assert.equal(report.policy.standard_hours, 7.5)
   assert.equal(report.employees[0].days[0].overtime_minutes, 30)
   assert.equal(report.employees[0].days[0].status, 'overtime')

@@ -1,0 +1,129 @@
+{
+  "run_id": "attendance-1794569827485",
+  "scope": "ATTENDANCE-CHECK-S1",
+  "status": "pass",
+  "counted": false,
+  "note": "synthetic punch records only; no employee data; local files only",
+  "metrics": [
+    {
+      "req_id": "AC-A01",
+      "metric": "daily audit totals",
+      "threshold": "employees=6 days=30 worked=14220 overtime=300 over_days=1 missing=1 rest_short=1 violations=3",
+      "actual": "employees=6 days=30 worked=14220 overtime=300 over_days=1 missing=1 rest_short=1 violations=3",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A02",
+      "metric": "audited period",
+      "threshold": "from=2026-06-22 to=2026-06-26 workdays=5 months=2026-06",
+      "actual": "from=2026-06-22 to=2026-06-26 workdays=5 months=2026-06",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A03",
+      "metric": "cross-midnight punch",
+      "threshold": "date=2026-06-23 out=次日 00:30 worked=570 overtime=90 cross_midnight=true",
+      "actual": "date=2026-06-23 out=次日 00:30 worked=570 overtime=90 cross_midnight=true",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A04",
+      "metric": "daily overtime cap",
+      "threshold": "overtime=210 status=over_limit violation_minutes=30",
+      "actual": "overtime=210 status=over_limit violation_minutes=30",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A05",
+      "metric": "missing punch is an issue",
+      "threshold": "missing_out=true out_empty=true code=E_ATT_MISSING_PUNCH",
+      "actual": "missing_out=true out_empty=true code=E_ATT_MISSING_PUNCH",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A06",
+      "metric": "short break",
+      "threshold": "worked=480 overtime=0 status=rest_short",
+      "actual": "worked=480 overtime=0 status=rest_short",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A07",
+      "metric": "monthly summary",
+      "threshold": "rows=6 expected=30 attended=29 overtime=300 anomalies=3 over_limit_employees=0",
+      "actual": "rows=6 expected=30 attended=29 overtime=300 anomalies=3 over_limit_employees=0",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A08",
+      "metric": "severity-sorted violations",
+      "threshold": "order=王强/李娜/刘洋 severity=high/medium/low",
+      "actual": "order=王强/李娜/刘洋 severity=high/medium/low",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A09",
+      "metric": "monthly cap over_limit",
+      "threshold": "monthly=2340 over=180 over_limit=true summary_over_limit=true",
+      "actual": "monthly=2340 over=180 over_limit=true summary_over_limit=true",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A10",
+      "metric": "reconciliation CSV",
+      "threshold": "header=ok rows=30 lines=31 hash=ok",
+      "actual": "header=ok rows=30 lines=31 hash=ok",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A11",
+      "metric": "export path safety",
+      "threshold": "E_ATT_PATH_INVALID",
+      "actual": "E_ATT_PATH_INVALID",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A12",
+      "metric": "invalid time",
+      "threshold": "E_ATT_TIME_INVALID",
+      "actual": "E_ATT_TIME_INVALID",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A13",
+      "metric": "invalid date",
+      "threshold": "E_ATT_DATE_INVALID",
+      "actual": "E_ATT_DATE_INVALID",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A14",
+      "metric": "bad CSV header",
+      "threshold": "E_ATT_CSV_ROW",
+      "actual": "E_ATT_CSV_ROW",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A15",
+      "metric": "empty punch file",
+      "threshold": "E_ATT_EMPTY",
+      "actual": "E_ATT_EMPTY",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A16",
+      "metric": "holiday switch",
+      "threshold": "default=E_ATT_EMPTY holiday_days=1 holiday_overtime=180",
+      "actual": "default=E_ATT_EMPTY holiday_days=1 holiday_overtime=180",
+      "pass": true
+    },
+    {
+      "req_id": "AC-A17",
+      "metric": "month filter with no data",
+      "threshold": "E_ATT_EMPTY",
+      "actual": "E_ATT_EMPTY",
+      "pass": true
+    }
+  ],
+  "pass": true
+}

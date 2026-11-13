@@ -55,9 +55,9 @@ async function main() {
   try {
     const tools = Object.fromEntries(createTools({ baseDir }).map((tool) => [tool.name, tool]))
     const exec = { callId: 'acceptance' }
-    const check = await tools['attendance.check'].execute({ path: sample }, exec)
-    const summary = await tools['attendance.summary'].execute({ path: sample }, exec)
-    const exported = await tools['attendance.export'].execute({ path: sample }, exec)
+    const check = await tools['attendance_check'].execute({ path: sample }, exec)
+    const summary = await tools['attendance_summary'].execute({ path: sample }, exec)
+    const exported = await tools['attendance_export'].execute({ path: sample }, exec)
 
     const exportText = readFileSync(exported.path, 'utf8')
     const exportParsed = parseCsv(exportText)
@@ -80,14 +80,14 @@ async function main() {
       monthlyFile,
       `${HEADER}\n${MONTH_DATES.map((date) => `张伟,${date},09:00,21:00,60`).join('\n')}\n`,
     )
-    const monthly = await tools['attendance.check'].execute({ path: monthlyFile }, exec)
-    const monthlySummary = await tools['attendance.summary'].execute({ path: monthlyFile }, exec)
+    const monthly = await tools['attendance_check'].execute({ path: monthlyFile }, exec)
+    const monthlySummary = await tools['attendance_summary'].execute({ path: monthlyFile }, exec)
     const monthlyViolation = monthly.violations.find((violation) => violation.scope === 'month')
 
     const weekendFile = path.join(tempDir, 'weekend.csv')
     writeFileSync(weekendFile, `${HEADER}\n张伟,2026-06-27,09:00,13:00,60\n`)
-    const weekendDefaultCode = await errorCode(tools['attendance.check'].execute({ path: weekendFile }, exec))
-    const weekendIncluded = await tools['attendance.check'].execute(
+    const weekendDefaultCode = await errorCode(tools['attendance_check'].execute({ path: weekendFile }, exec))
+    const weekendIncluded = await tools['attendance_check'].execute(
       { path: weekendFile, include_holidays: true },
       exec,
     )
@@ -102,14 +102,14 @@ async function main() {
     writeFileSync(emptyFile, `${HEADER}\n`)
 
     const badPathCode = await errorCode(
-      tools['attendance.export'].execute({ path: sample, filename: '../evil.csv' }, exec),
+      tools['attendance_export'].execute({ path: sample, filename: '../evil.csv' }, exec),
     )
-    const badTimeCode = await errorCode(tools['attendance.check'].execute({ path: badTimeFile }, exec))
-    const badDateCode = await errorCode(tools['attendance.check'].execute({ path: badDateFile }, exec))
-    const badHeaderCode = await errorCode(tools['attendance.check'].execute({ path: badHeaderFile }, exec))
-    const emptyCode = await errorCode(tools['attendance.check'].execute({ path: emptyFile }, exec))
+    const badTimeCode = await errorCode(tools['attendance_check'].execute({ path: badTimeFile }, exec))
+    const badDateCode = await errorCode(tools['attendance_check'].execute({ path: badDateFile }, exec))
+    const badHeaderCode = await errorCode(tools['attendance_check'].execute({ path: badHeaderFile }, exec))
+    const emptyCode = await errorCode(tools['attendance_check'].execute({ path: emptyFile }, exec))
     const missingMonthCode = await errorCode(
-      tools['attendance.summary'].execute({ path: sample, month: '2026-07' }, exec),
+      tools['attendance_summary'].execute({ path: sample, month: '2026-07' }, exec),
     )
 
     const metrics = [

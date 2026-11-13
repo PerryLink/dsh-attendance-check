@@ -10,7 +10,7 @@ async function fixture(t, rows, name = 'overtime.csv') {
 
 test('exactly 3h of overtime is allowed by the default daily cap', async (t) => {
   const { file, tools } = await fixture(t, ['张伟,2026-06-01,09:00,21:00,60'])
-  const report = await tools['attendance.check'].execute({ path: file }, exec)
+  const report = await tools['attendance_check'].execute({ path: file }, exec)
   assert.equal(report.employees[0].days[0].worked_minutes, 660)
   assert.equal(report.employees[0].days[0].overtime_minutes, 180)
   assert.equal(report.totals.over_limit_days, 0)
@@ -19,7 +19,7 @@ test('exactly 3h of overtime is allowed by the default daily cap', async (t) => 
 
 test('one minute over the daily cap is a medium over_limit violation', async (t) => {
   const { file, tools } = await fixture(t, ['张伟,2026-06-01,09:00,21:01,60'])
-  const report = await tools['attendance.check'].execute({ path: file }, exec)
+  const report = await tools['attendance_check'].execute({ path: file }, exec)
   assert.equal(report.totals.over_limit_days, 1)
   assert.equal(report.totals.violations, 1)
   const violation = report.violations[0]
@@ -33,7 +33,7 @@ test('one minute over the daily cap is a medium over_limit violation', async (t)
 test('exactly 36h in a month does not trip the monthly cap', async (t) => {
   const rows = JUNE_WEEKDAYS.slice(0, 12).map((date) => `张伟,${date},09:00,21:00,60`)
   const { file, tools } = await fixture(t, rows)
-  const report = await tools['attendance.check'].execute({ path: file }, exec)
+  const report = await tools['attendance_check'].execute({ path: file }, exec)
   assert.equal(report.employees[0].monthly_overtime[0].overtime_minutes, 2160)
   assert.equal(report.employees[0].monthly_overtime[0].over_limit, false)
   assert.equal(report.totals.over_limit_months, 0)
@@ -43,7 +43,7 @@ test('exactly 36h in a month does not trip the monthly cap', async (t) => {
 test('more than 36h in a month is flagged over_limit on the month', async (t) => {
   const rows = JUNE_WEEKDAYS.slice(0, 13).map((date) => `张伟,${date},09:00,21:00,60`)
   const { file, tools } = await fixture(t, rows)
-  const report = await tools['attendance.check'].execute({ path: file }, exec)
+  const report = await tools['attendance_check'].execute({ path: file }, exec)
   const monthly = report.employees[0].monthly_overtime[0]
   assert.equal(monthly.overtime_minutes, 2340)
   assert.equal(monthly.over_minutes, 180)
@@ -65,7 +65,7 @@ test('the summary marks the over-limit employee and totals the anomaly', async (
   const rows = JUNE_WEEKDAYS.slice(0, 13).map((date) => `张伟,${date},09:00,21:00,60`)
   const { dir, file } = await fixture(t, rows)
   const tools = toolMap(dir)
-  const summary = await tools['attendance.summary'].execute({ path: file }, exec)
+  const summary = await tools['attendance_summary'].execute({ path: file }, exec)
   assert.equal(summary.rows.length, 1)
   assert.equal(summary.rows[0].over_limit, true)
   assert.equal(summary.rows[0].overtime_minutes, 2340)
@@ -76,7 +76,7 @@ test('the summary marks the over-limit employee and totals the anomaly', async (
 
 test('a custom daily cap moves the over-limit threshold', async (t) => {
   const { file, tools } = await fixture(t, ['张伟,2026-06-01,09:00,21:00,60'])
-  const report = await tools['attendance.check'].execute(
+  const report = await tools['attendance_check'].execute(
     { path: file, daily_overtime_cap_hours: 2 },
     exec,
   )
@@ -87,7 +87,7 @@ test('a custom daily cap moves the over-limit threshold', async (t) => {
 
 test('a fractional daily cap is converted to whole minutes', async (t) => {
   const { file, tools } = await fixture(t, ['张伟,2026-06-01,09:00,21:00,60'])
-  const report = await tools['attendance.check'].execute(
+  const report = await tools['attendance_check'].execute(
     { path: file, daily_overtime_cap_hours: 2.5 },
     exec,
   )
@@ -97,7 +97,7 @@ test('a fractional daily cap is converted to whole minutes', async (t) => {
 
 test('a zero monthly cap flags any overtime in the month', async (t) => {
   const { file, tools } = await fixture(t, ['张伟,2026-06-01,09:00,20:00,60'])
-  const report = await tools['attendance.check'].execute(
+  const report = await tools['attendance_check'].execute(
     { path: file, monthly_overtime_cap_hours: 0 },
     exec,
   )
@@ -109,7 +109,7 @@ test('a zero monthly cap flags any overtime in the month', async (t) => {
 
 test('a longer standard workday removes overtime', async (t) => {
   const { file, tools } = await fixture(t, ['张伟,2026-06-01,09:00,18:00,60'])
-  const report = await tools['attendance.check'].execute({ path: file, standard_hours: 10 }, exec)
+  const report = await tools['attendance_check'].execute({ path: file, standard_hours: 10 }, exec)
   assert.equal(report.employees[0].days[0].overtime_minutes, 0)
   assert.equal(report.totals.violations, 0)
 })
@@ -120,7 +120,7 @@ test('a monthly violation outranks a daily violation in the sorted list', async 
   )
   const { dir, file } = await fixture(t, rows)
   const tools = toolMap(dir)
-  const report = await tools['attendance.check'].execute({ path: file }, exec)
+  const report = await tools['attendance_check'].execute({ path: file }, exec)
   assert.deepEqual(
     report.violations.map((violation) => [violation.scope, violation.severity, violation.rank]),
     [
