@@ -81,7 +81,7 @@ test('a file spanning two months produces one row per employee-month', async (t)
     '张伟,2026-07-03,09:00,18:00,60',
   ])
   const tools = toolMap(dir)
-  const summary = await tools['attendance.summary'].execute({ path: file }, exec)
+  const summary = await tools['attendance_summary'].execute({ path: file }, exec)
   assert.deepEqual(summary.rows.map((row) => [row.month, row.expected_days, row.attended_days]), [
     ['2026-06', 2, 2],
     ['2026-07', 3, 3],
@@ -105,7 +105,7 @@ test('a month filter clips the period to that month', async (t) => {
     '张伟,2026-07-03,09:00,18:00,60',
   ])
   const tools = toolMap(dir)
-  const july = await tools['attendance.summary'].execute({ path: file, month: '2026-07' }, exec)
+  const july = await tools['attendance_summary'].execute({ path: file, month: '2026-07' }, exec)
   assert.deepEqual(july.period, {
     from: '2026-07-01',
     to: '2026-07-03',

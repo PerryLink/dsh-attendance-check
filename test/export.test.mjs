@@ -71,7 +71,7 @@ test('unsafe export filenames are rejected with E_ATT_PATH_INVALID', async (t) =
   const tools = toolMap(dir)
   for (const filename of ['../evil.csv', 'a/b.csv', '/etc/passwd', 'with space.csv', '核对表.csv', '']) {
     await assert.rejects(
-      () => tools['attendance.export'].execute({ path: samplePath, filename }, exec),
+      () => tools['attendance_export'].execute({ path: samplePath, filename }, exec),
       (error) => {
         assert.equal(error.code, 'E_ATT_PATH_INVALID')
         return true
@@ -92,7 +92,7 @@ test('an employee name with a comma stays one quoted CSV cell', async (t) => {
   const dir = await makeTemp(t)
   const file = await writePunches(dir, 'comma.csv', ['"张, 三",2026-06-22,09:00,18:00,60'])
   const tools = toolMap(dir)
-  const exported = await tools['attendance.export'].execute({ path: file }, exec)
+  const exported = await tools['attendance_export'].execute({ path: file }, exec)
   const text = await readFile(exported.path, 'utf8')
   assert.ok(text.includes('"张, 三",2026-06-22'))
   const parsed = parseCsv(text)

@@ -41,7 +41,7 @@ Importa un registro local de fichajes (empleado, fecha, hora de entrada, hora de
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-flow-v5-dark.svg">
-  <img src="docs/assets/dsh-attendance-check-flow-v5-light.svg" width="100%" alt="Diagrama de estructura: el CSV de fichajes y la política alimentan seis puertas de prioridad (fin de semana → fichaje faltante → tope diario → descanso corto → festivo → horas extra → normal); los avisos entran en una lista ordenada 30/25/20/10, las horas extra mensuales se comparan con el tope de 2160 minutos y la auditoría sale como attendance.summary y attendance.export">
+  <img src="docs/assets/dsh-attendance-check-flow-v5-light.svg" width="100%" alt="Diagrama de estructura: el CSV de fichajes y la política alimentan seis puertas de prioridad (fin de semana → fichaje faltante → tope diario → descanso corto → festivo → horas extra → normal); los avisos entran en una lista ordenada 30/25/20/10, las horas extra mensuales se comparan con el tope de 2160 minutos y la auditoría sale como attendance_summary y attendance_export">
 </picture>
 
 ## Instalación en tres pasos
@@ -77,9 +77,9 @@ Los nombres de las herramientas son API estable; las descripciones se mantienen 
 
 | Herramienta | Propósito | Riesgo |
 |---|---|---|
-| `attendance.check` | Lee el CSV de fichajes y audita cada día: horas diarias, horas extra, días fuera de límite, fichajes faltantes, descansos insuficientes y una lista de infracciones ordenada por gravedad | R0 (solo lectura) |
-| `attendance.summary` | Resume por empleado-mes los días esperados/asistidos, horas extra, número de anomalías y la marca de exceso mensual | R0 (solo lectura) |
-| `attendance.export` | Escribe el CSV de conciliación a nivel de día (empleado/fecha/entrada/salida/descanso/horas/extra/estado/incidencia), devolviendo ruta y sha256 | R1 (escritura local solo en exports) |
+| `attendance_check` | Lee el CSV de fichajes y audita cada día: horas diarias, horas extra, días fuera de límite, fichajes faltantes, descansos insuficientes y una lista de infracciones ordenada por gravedad | R0 (solo lectura) |
+| `attendance_summary` | Resume por empleado-mes los días esperados/asistidos, horas extra, número de anomalías y la marca de exceso mensual | R0 (solo lectura) |
+| `attendance_export` | Escribe el CSV de conciliación a nivel de día (empleado/fecha/entrada/salida/descanso/horas/extra/estado/incidencia), devolviendo ruta y sha256 | R1 (escritura local solo en exports) |
 
 - **Auditoría diaria:** horas del día = salida − entrada − descanso; los turnos que cruzan la medianoche (`次日 HH:MM` o `24:00+`) se computan en el día siguiente.
 - **Detección de excesos:** más de 3 horas extra en un día marca el día `over_limit` (medium); más de 36 horas extra en el mes marca ese empleado-mes `over_limit` (high).
@@ -116,14 +116,14 @@ El ejemplo son 6 empleados × 5 días laborables (del 2026-06-22 al 2026-06-26),
 
 ## Salida
 
-- **`attendance.check`**: `{ period, source_sha256, policy, employees, violations, totals }`.
+- **`attendance_check`**: `{ period, source_sha256, policy, employees, violations, totals }`.
   - `period`: fechas cubiertas, días laborables lunes–viernes dentro del tramo, meses tocados.
   - `policy`: las reglas usadas (horas estándar, tope diario, tope mensual, descanso mínimo, festivos incluidos).
   - `employees[]`: por empleado, `days[]` (fecha, día de semana, fichajes, descanso, minutos trabajados, horas extra, marca de festivo, marca de cruce de medianoche, lado faltante, estado, códigos de incidencia), `worked_minutes`, `overtime_minutes`, `over_limit_days`, `over_limit_months`, `missing_punches`, `rest_short_days`, `skipped_holiday_days` y `monthly_overtime[]`.
   - `violations[]`: infracciones ordenadas por gravedad con `severity`, `rank`, `kind`, `scope`, `code`, `employee`, `date`/`month`, `minutes` y un `message` en chino.
   - `totals`: empleados, días auditados, filas de fin de semana omitidas, minutos trabajados y extra, días/meses fuera de límite, fichajes faltantes, días con descanso insuficiente e infracciones totales.
-- **`attendance.summary`**: `{ period, source_sha256, policy, rows, totals }`. Una fila por empleado-mes: `expected_days`, `attended_days`, `overtime_minutes` / `overtime_hours`, `anomaly_count`, `missing_punches`, `rest_short_days`, `over_limit_days` y `over_limit` (horas extra mensuales por encima de 36 h). Filtro opcional `month=YYYY-MM`.
-- **`attendance.export`**: escribe el CSV de conciliación a nivel de día en `$DSH_HOME/dsh-attendance-check/exports/` con las columnas `员工,日期,上班,下班,休息分钟,日工时,加班小时,状态,问题`; devuelve ruta, `sha256`, bytes y número de filas. El nombre de archivo solo admite `[A-Za-z0-9._-]`.
+- **`attendance_summary`**: `{ period, source_sha256, policy, rows, totals }`. Una fila por empleado-mes: `expected_days`, `attended_days`, `overtime_minutes` / `overtime_hours`, `anomaly_count`, `missing_punches`, `rest_short_days`, `over_limit_days` y `over_limit` (horas extra mensuales por encima de 36 h). Filtro opcional `month=YYYY-MM`.
+- **`attendance_export`**: escribe el CSV de conciliación a nivel de día en `$DSH_HOME/dsh-attendance-check/exports/` con las columnas `员工,日期,上班,下班,休息分钟,日工时,加班小时,状态,问题`; devuelve ruta, `sha256`, bytes y número de filas. El nombre de archivo solo admite `[A-Za-z0-9._-]`.
 
 ## Reglas
 
@@ -150,8 +150,8 @@ Este plugin no tiene claves de configuración a nivel de perfil (`cordis.patch.y
 | `monthly_overtime_cap_hours` | `36` | Tope de horas extra mensuales, rango 0–744 |
 | `min_break_minutes` | `60` | Minutos mínimos de descanso, entero 0–720 |
 | `include_holidays` | `false` | Con `true`, las filas de fin de semana se auditan como trabajo festivo: tiempo estándar 0, todos los minutos trabajados cuentan como horas extra y el tope diario sigue aplicando |
-| `month` | (vacío) | Solo `attendance.summary`: `YYYY-MM`, mirar un único mes |
-| `filename` | derivado del periodo | Solo `attendance.export`: nombre del archivo exportado, solo `[A-Za-z0-9._-]` |
+| `month` | (vacío) | Solo `attendance_summary`: `YYYY-MM`, mirar un único mes |
+| `filename` | derivado del periodo | Solo `attendance_export`: nombre del archivo exportado, solo `[A-Za-z0-9._-]` |
 
 ## FAQ
 
@@ -165,7 +165,7 @@ Escribe `次日 01:30` (con o sin espacio) o la forma extendida `25:30`; son equ
 <details>
 <summary>¿Por qué un fichaje faltante no es un error?</summary>
 
-Los fichajes faltantes son habituales en datos de asistencia reales y un solo fichaje faltante no debería tumbar toda la conciliación. Se registra como un día `missing_punch` más una incidencia `E_ATT_MISSING_PUNCH`, con 0 minutos trabajados y 0 horas extra; `attendance.check` sigue devolviendo los resultados de los demás para que RR. HH. corrija el fichaje y repita. Solo abortan la llamada CSV, fechas, horas, descansos o reglas mal formados.
+Los fichajes faltantes son habituales en datos de asistencia reales y un solo fichaje faltante no debería tumbar toda la conciliación. Se registra como un día `missing_punch` más una incidencia `E_ATT_MISSING_PUNCH`, con 0 minutos trabajados y 0 horas extra; `attendance_check` sigue devolviendo los resultados de los demás para que RR. HH. corrija el fichaje y repita. Solo abortan la llamada CSV, fechas, horas, descansos o reglas mal formados.
 
 </details>
 
@@ -204,7 +204,7 @@ No. Lee el CSV indicado, escribe solo en `$DSH_HOME/dsh-attendance-check/exports
 - Red: no.
 - Sistemas externos: ninguno.
 
-`attendance.check` y `attendance.summary` son **R0** (solo lectura). `attendance.export` es **R1** (escritura local solo en la carpeta exports). `DSH_ATTENDANCE_CHECK_HOME` sobrescribe la raíz de escritura local para las pruebas; el valor por defecto es exactamente `$DSH_HOME/dsh-attendance-check`.
+`attendance_check` y `attendance_summary` son **R0** (solo lectura). `attendance_export` es **R1** (escritura local solo en la carpeta exports). `DSH_ATTENDANCE_CHECK_HOME` sobrescribe la raíz de escritura local para las pruebas; el valor por defecto es exactamente `$DSH_HOME/dsh-attendance-check`.
 
 ## Errores
 
@@ -277,7 +277,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-Versión actual `0.1.0` · 134 pruebas superadas (`node --test test/*.test.mjs`). Las imágenes del README se generan programáticamente con [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python: el hero se dibuja con Pillow y el diagrama de estructura es un SVG escrito a mano; ambos en variante clara y oscura) y puede reejecutarse en cualquier momento.
+Versión actual `0.2.0` · 135 pruebas superadas (`node --test test/*.test.mjs`). Las imágenes del README se generan programáticamente con [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python: el hero se dibuja con Pillow y el diagrama de estructura es un SVG escrito a mano; ambos en variante clara y oscura) y puede reejecutarse en cualquier momento.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `attendance`, `overtime`, `timesheet`, `punch-clock`, `payroll`, `hr`, `csv`, `perrylink`
 
@@ -285,7 +285,7 @@ Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `attendance`, `overtime`, `time
 
 Este proyecto es miembro de la familia de plugins de DeepSeek Harness mantenida por [PerryLink](https://github.com/PerryLink) (todos Apache-2.0). Si este plugin te ayuda, **una estrella facilita que la siguiente persona lo encuentre** — nada está bloqueado tras ella.
 
-- [@PerryLink](https://github.com/PerryLink) — creador y mantenedor: la canalización de auditoría del CSV de fichajes, las tres herramientas `attendance.check` / `attendance.summary` / `attendance.export`, el ejemplo dorado de quickstart con su evidencia de aceptación y la documentación en cinco idiomas.
+- [@PerryLink](https://github.com/PerryLink) — creador y mantenedor: la canalización de auditoría del CSV de fichajes, las tres herramientas `attendance_check` / `attendance_summary` / `attendance_export`, el ejemplo dorado de quickstart con su evidencia de aceptación y la documentación en cinco idiomas.
 
 ## Licencia
 

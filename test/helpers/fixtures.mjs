@@ -44,15 +44,15 @@ export function assertErrorCode(error, code) {
 }
 
 export async function checkFor(tools, overrides = {}) {
-  return tools['attendance.check'].execute({ path: samplePath, ...overrides }, exec)
+  return tools['attendance_check'].execute({ path: samplePath, ...overrides }, exec)
 }
 
 export async function summaryFor(tools, overrides = {}) {
-  return tools['attendance.summary'].execute({ path: samplePath, ...overrides }, exec)
+  return tools['attendance_summary'].execute({ path: samplePath, ...overrides }, exec)
 }
 
 export async function exportFor(tools, overrides = {}) {
-  return tools['attendance.export'].execute({ path: samplePath, ...overrides }, exec)
+  return tools['attendance_export'].execute({ path: samplePath, ...overrides }, exec)
 }
 
 /** Weekdays of June 2026 from 06-01, used by overtime fixtures. */

@@ -41,7 +41,7 @@ Import a local punch ledger (employee, date, clock-in, clock-out, break minutes)
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-attendance-check-flow-v5-dark.svg">
-  <img src="docs/assets/dsh-attendance-check-flow-v5-light.svg" width="100%" alt="Structure diagram: the punch CSV and policy feed six priority gates (weekend skip → missing punch → daily cap → short break → holiday → overtime → normal); issues join a list ranked 30/25/20/10, monthly overtime is compared with the 2160-minute cap, and the audit exits as attendance.summary and attendance.export">
+  <img src="docs/assets/dsh-attendance-check-flow-v5-light.svg" width="100%" alt="Structure diagram: the punch CSV and policy feed six priority gates (weekend skip → missing punch → daily cap → short break → holiday → overtime → normal); issues join a list ranked 30/25/20/10, monthly overtime is compared with the 2160-minute cap, and the audit exits as attendance_summary and attendance_export">
 </picture>
 
 ## Three-step setup
@@ -77,9 +77,9 @@ Tool names are stable API; descriptions stay in English to match runtime output.
 
 | Tool | Purpose | Risk |
 |---|---|---|
-| `attendance.check` | Read the punch CSV and audit every day: daily hours, overtime, over-limit days, missing punches, short breaks and a severity-sorted violation list | R0 (read-only) |
-| `attendance.summary` | Roll up expected/attended days, overtime, anomaly count and the monthly over-limit flag per employee-month | R0 (read-only) |
-| `attendance.export` | Write the day-level reconciliation CSV (employee/date/clocks/break/hours/overtime/status/issue), returning path and sha256 | R1 (local write under exports only) |
+| `attendance_check` | Read the punch CSV and audit every day: daily hours, overtime, over-limit days, missing punches, short breaks and a severity-sorted violation list | R0 (read-only) |
+| `attendance_summary` | Roll up expected/attended days, overtime, anomaly count and the monthly over-limit flag per employee-month | R0 (read-only) |
+| `attendance_export` | Write the day-level reconciliation CSV (employee/date/clocks/break/hours/overtime/status/issue), returning path and sha256 | R1 (local write under exports only) |
 
 - **Day-level audit:** daily hours = clock-out − clock-in − break; cross-midnight shifts (the next-day or `24:00+` forms) are computed on the next day.
 - **Over-limit detection:** daily overtime above 3 hours marks the day `over_limit` (medium); monthly overtime above 36 hours marks the employee-month `over_limit` (high).
@@ -129,14 +129,14 @@ The sample is 6 employees × 5 workdays (2026-06-22 to 2026-06-26), 30 synthetic
 
 ## Output
 
-- **`attendance.check`**: `{ period, source_sha256, policy, employees, violations, totals }`.
+- **`attendance_check`**: `{ period, source_sha256, policy, employees, violations, totals }`.
   - `period`: covered dates, Monday–Friday workdays in that span, months touched.
   - `policy`: the rules used (standard hours, daily cap, monthly cap, minimum break, holidays included).
   - `employees[]`: per employee, `days[]` (date, weekday, clocks, break, worked minutes, overtime, holiday flag, cross-midnight flag, missing side, status, issue codes), `worked_minutes`, `overtime_minutes`, `over_limit_days`, `over_limit_months`, `missing_punches`, `rest_short_days`, `skipped_holiday_days` and `monthly_overtime[]`.
   - `violations[]`: severity-sorted violations with `severity`, `rank`, `kind`, `scope`, `code`, `employee`, `date`/`month`, `minutes` and a Chinese `message`.
   - `totals`: employees, audited days, skipped weekend rows, worked and overtime minutes, over-limit days/months, missing punches, short-break days and total violations.
-- **`attendance.summary`**: `{ period, source_sha256, policy, rows, totals }`. One row per employee-month: `expected_days`, `attended_days`, `overtime_minutes` / `overtime_hours`, `anomaly_count`, `missing_punches`, `rest_short_days`, `over_limit_days`, and `over_limit` (monthly overtime above 36h). Optional `month=YYYY-MM` filter.
-- **`attendance.export`**: writes the day-level reconciliation CSV under `$DSH_HOME/dsh-attendance-check/exports/`; returns path, `sha256`, bytes and row count. The filename must be `[A-Za-z0-9._-]` only. The header is fixed Chinese:
+- **`attendance_summary`**: `{ period, source_sha256, policy, rows, totals }`. One row per employee-month: `expected_days`, `attended_days`, `overtime_minutes` / `overtime_hours`, `anomaly_count`, `missing_punches`, `rest_short_days`, `over_limit_days`, and `over_limit` (monthly overtime above 36h). Optional `month=YYYY-MM` filter.
+- **`attendance_export`**: writes the day-level reconciliation CSV under `$DSH_HOME/dsh-attendance-check/exports/`; returns path, `sha256`, bytes and row count. The filename must be `[A-Za-z0-9._-]` only. The header is fixed Chinese:
 
 ```text
 员工,日期,上班,下班,休息分钟,日工时,加班小时,状态,问题
@@ -167,8 +167,8 @@ This plugin has no profile-level config keys (`cordis.patch.yml` only inserts th
 | `monthly_overtime_cap_hours` | `36` | Monthly overtime cap in hours, range 0–744 |
 | `min_break_minutes` | `60` | Minimum break minutes, integer 0–720 |
 | `include_holidays` | `false` | With `true`, weekend rows are audited as holiday work: standard time is 0, all worked minutes count as overtime, and the daily cap still applies |
-| `month` | (empty) | `attendance.summary` only: `YYYY-MM`, look at a single month |
-| `filename` | derived from the period | `attendance.export` only: export filename, `[A-Za-z0-9._-]` only |
+| `month` | (empty) | `attendance_summary` only: `YYYY-MM`, look at a single month |
+| `filename` | derived from the period | `attendance_export` only: export filename, `[A-Za-z0-9._-]` only |
 
 ## FAQ
 
@@ -190,7 +190,7 @@ A bare `01:30` is treated as the same-day early morning, which is earlier than c
 <details>
 <summary>Why is a missing punch not an error?</summary>
 
-Missing punches are routine in real attendance data and one missing punch should not fail the whole reconciliation. It is recorded as a `missing_punch` day plus an `E_ATT_MISSING_PUNCH` issue, with 0 worked minutes and 0 overtime; `attendance.check` still returns everyone else's results so HR can fix the punch and rerun. Only malformed CSV, dates, times, breaks or rules abort the call.
+Missing punches are routine in real attendance data and one missing punch should not fail the whole reconciliation. It is recorded as a `missing_punch` day plus an `E_ATT_MISSING_PUNCH` issue, with 0 worked minutes and 0 overtime; `attendance_check` still returns everyone else's results so HR can fix the punch and rerun. Only malformed CSV, dates, times, breaks or rules abort the call.
 
 </details>
 
@@ -229,7 +229,7 @@ No. It reads the named CSV, writes only under `$DSH_HOME/dsh-attendance-check/ex
 - Network: no.
 - External systems: none.
 
-`attendance.check` and `attendance.summary` are **R0** (read-only). `attendance.export` is **R1** (local write under the exports folder only). `DSH_ATTENDANCE_CHECK_HOME` overrides the local write root for tests; the default is exactly `$DSH_HOME/dsh-attendance-check`.
+`attendance_check` and `attendance_summary` are **R0** (read-only). `attendance_export` is **R1** (local write under the exports folder only). `DSH_ATTENDANCE_CHECK_HOME` overrides the local write root for tests; the default is exactly `$DSH_HOME/dsh-attendance-check`.
 
 ## Errors
 
@@ -306,7 +306,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-Current version `0.1.0` · 134 tests pass (`node --test test/*.test.mjs`). The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python: the hero is drawn with Pillow, the structure diagram is a hand-written SVG; both in light and dark variants) and can be re-run at any time.
+Current version `0.2.0` · 135 tests pass (`node --test test/*.test.mjs`). The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python: the hero is drawn with Pillow, the structure diagram is a hand-written SVG; both in light and dark variants) and can be re-run at any time.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `attendance`, `overtime`, `timesheet`, `punch-clock`, `payroll`, `hr`, `csv`, `perrylink`
 
@@ -314,7 +314,7 @@ Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `attendance`, `overtime`, `time
 
 This project is a member of the DeepSeek Harness plugin family maintained by [PerryLink](https://github.com/PerryLink) (all Apache-2.0). If this plugin helps you, **a star makes it easier for the next person to find it** — nothing is gated behind it.
 
-- [@PerryLink](https://github.com/PerryLink) — creator and maintainer: the punch-CSV audit pipeline, the three tools `attendance.check` / `attendance.summary` / `attendance.export`, the quickstart golden sample and acceptance evidence, and the five-language docs.
+- [@PerryLink](https://github.com/PerryLink) — creator and maintainer: the punch-CSV audit pipeline, the three tools `attendance_check` / `attendance_summary` / `attendance_export`, the quickstart golden sample and acceptance evidence, and the five-language docs.
 
 ## License
 

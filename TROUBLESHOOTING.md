@@ -7,7 +7,7 @@
 
 - **症状**：`打卡 CSV 有一行读不了：列数、表头或字段不合规（E_ATT_CSV_ROW）｜下一步：对照表头检查这一行：员工、日期、上班时间、下班时间、休息分钟｜细节：第 7 行有 4 列，表头有 5 列`
 - **原因**：某一行少填或多填了一个字段，通常发生在休息分钟被省略、或员工姓名里有未加引号的逗号。
-- **动作**：按报错行号补成 5 列；姓名里本身有逗号时用双引号包住，例如 `"张, 三"`。改完重跑 `attendance.check`。
+- **动作**：按报错行号补成 5 列；姓名里本身有逗号时用双引号包住，例如 `"张, 三"`。改完重跑 `attendance_check`。
 
 ## 2. 表头缺列、重复或同一人同一天重复（E_ATT_CSV_ROW）
 
@@ -48,12 +48,12 @@
 ## 8. 没有可核对的打卡记录（E_ATT_EMPTY）
 
 - **症状**：`没有可核对的打卡记录：空文件、只有表头、或全部是周末且未开启节假日核对（E_ATT_EMPTY）｜下一步：确认文件里有员工与日期；需要核对周末/节假日打卡时传 include_holidays=true`
-- **原因**：CSV 为空、只有表头；所有记录都落在周六/周日且 `include_holidays=false`；`attendance.summary` 的 `month` 筛选在该文件里没有数据。
-- **动作**：先确认文件里有员工与日期；要核对周末加班就传 `include_holidays=true`；月份筛选改成文件实际覆盖的月份（可用 `attendance.check` 的 `period.months` 查看）。
+- **原因**：CSV 为空、只有表头；所有记录都落在周六/周日且 `include_holidays=false`；`attendance_summary` 的 `month` 筛选在该文件里没有数据。
+- **动作**：先确认文件里有员工与日期；要核对周末加班就传 `include_holidays=true`；月份筛选改成文件实际覆盖的月份（可用 `attendance_check` 的 `period.months` 查看）。
 
 ## 9. 缺卡提示（E_ATT_MISSING_PUNCH）
 
-- **症状**：`attendance.check` 正常返回，但 `violations` 里出现 `E_ATT_MISSING_PUNCH`，例如 `2026-06-25 王强 缺少下班卡，无法核算当日工时`；该日 `worked_minutes` 与 `overtime_minutes` 都是 0。
+- **症状**：`attendance_check` 正常返回，但 `violations` 里出现 `E_ATT_MISSING_PUNCH`，例如 `2026-06-25 王强 缺少下班卡，无法核算当日工时`；该日 `worked_minutes` 与 `overtime_minutes` 都是 0。
 - **原因**：`clock_in` 或 `clock_out` 为空。这是**问题（issue）**而不是异常，故意不抛错，避免一条缺卡让整份核对失败。
 - **动作**：补卡后重跑；在补齐之前，缺卡日不计入实出勤，也不会产生加班。`missing_out=true` 表示缺下班卡，`missing_in=true` 表示缺上班卡。
 
@@ -73,7 +73,7 @@
 
 - **症状**：没有报错，但某人日工时、加班或应出勤和手工表不同。
 - **原因**：常见四类——① 跨零点没写 `次日`/`24:00+`；② 休息分钟填成了小时；③ 周末记录默认被跳过；④ 月上限只对文件覆盖到的数据累计。另外，应出勤按「文件覆盖区间内的周一至周五」计算，不是整月日历天数。
-- **动作**：用 `attendance.check` 的 `employees[].days[]` 逐日核对 `worked_minutes`、`overtime_minutes` 与 `status`，再用 `attendance.export` 导出核对表对照；确认 `policy`、`period` 和 `totals.skipped_holiday_rows` 是否符合预期。
+- **动作**：用 `attendance_check` 的 `employees[].days[]` 逐日核对 `worked_minutes`、`overtime_minutes` 与 `status`，再用 `attendance_export` 导出核对表对照；确认 `policy`、`period` 和 `totals.skipped_holiday_rows` 是否符合预期。
 
 ## 13. 还不行
 
@@ -84,4 +84,4 @@ node scripts/gate.mjs                     # 元数据 + 验收门
 ```
 
 仍失败时请在 <https://github.com/PerryLink/dsh-attendance-check/issues> 附上：包版本、最小合成 CSV（或生成脚本）、
-`attendance.check` / `attendance.summary` / `attendance.export` 的完整报错行、Node 与 DSH 版本。**不要附真实员工考勤明细。**
+`attendance_check` / `attendance_summary` / `attendance_export` 的完整报错行、Node 与 DSH 版本。**不要附真实员工考勤明细。**

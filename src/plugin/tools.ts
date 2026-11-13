@@ -243,7 +243,7 @@ const exportSchema = {
 
 export function createTools(deps: ToolDeps) {
   const check = defineTool({
-    name: 'attendance.check',
+    name: 'attendance_check',
     description:
       'Audit a local punch CSV (employee, date, clock_in, clock_out, break_minutes) against rules: 8h standard workday, 3h daily overtime cap, 36h monthly overtime cap, minimum break minutes and optional weekend/holiday work. Times are HH:MM; cross-midnight uses "次日 HH:MM" or 24:00+. Returns per-employee daily hours, overtime, over-limit days, missing punches and short breaks, plus a severity-sorted violation list. Missing punches are issues, not errors. Read-only.',
     parameters: policyParameters,
@@ -262,9 +262,9 @@ export function createTools(deps: ToolDeps) {
   })
 
   const summary = defineTool({
-    name: 'attendance.summary',
+    name: 'attendance_summary',
     description:
-      'Roll the punch audit up per employee per month: expected weekdays, attended days, overtime total, monthly over-limit flag and anomaly count. Uses the same rules as attendance.check; month=YYYY-MM filters one month. Read-only.',
+      'Roll the punch audit up per employee per month: expected weekdays, attended days, overtime total, monthly over-limit flag and anomaly count. Uses the same rules as attendance_check; month=YYYY-MM filters one month. Read-only.',
     parameters: {
       ...policyParameters,
       month: { type: 'string' as const },
@@ -285,7 +285,7 @@ export function createTools(deps: ToolDeps) {
   })
 
   const exportTool = defineTool({
-    name: 'attendance.export',
+    name: 'attendance_export',
     description:
       'Write the day-level reconciliation table as CSV under $DSH_HOME/dsh-attendance-check/exports with columns 员工/日期/上班/下班/休息分钟/日工时/加班小时/状态/问题, one row per audited employee-day in employee and date order. The filename must be one safe component. Returns path, sha256, bytes and counts. Local write only.',
     parameters: {

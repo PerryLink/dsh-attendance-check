@@ -9,7 +9,7 @@ test('Sunday and Saturday rows are skipped by default', async (t) => {
     '张伟,2026-06-27,09:00,18:00,60',
   ])
   const tools = toolMap(dir)
-  const report = await tools['attendance.check'].execute({ path: file }, exec)
+  const report = await tools['attendance_check'].execute({ path: file }, exec)
   assert.equal(report.totals.days, 1)
   assert.equal(report.totals.skipped_holiday_rows, 1)
   assert.equal(report.employees[0].skipped_holiday_days, 1)
@@ -24,7 +24,7 @@ test('include_holidays=false on an all-weekend file is E_ATT_EMPTY', async (t) =
   ])
   const tools = toolMap(dir)
   await assert.rejects(
-    () => tools['attendance.check'].execute({ path: file }, exec),
+    () => tools['attendance_check'].execute({ path: file }, exec),
     (error) => {
       assert.equal(error.code, 'E_ATT_EMPTY')
       assert.match(error.message, /include_holidays=true/)
@@ -37,7 +37,7 @@ test('include_holidays=true audits weekend work as full overtime', async (t) => 
   const dir = await makeTemp(t)
   const file = await writePunches(dir, 'weekend-work.csv', ['张伟,2026-06-27,09:00,13:00,60'])
   const tools = toolMap(dir)
-  const report = await tools['attendance.check'].execute({ path: file, include_holidays: true }, exec)
+  const report = await tools['attendance_check'].execute({ path: file, include_holidays: true }, exec)
   const day = report.employees[0].days[0]
   assert.equal(day.holiday, true)
   assert.equal(day.worked_minutes, 180)
@@ -52,7 +52,7 @@ test('holiday overtime still respects the daily cap', async (t) => {
   const dir = await makeTemp(t)
   const file = await writePunches(dir, 'weekend-long.csv', ['张伟,2026-06-27,09:00,18:00,60'])
   const tools = toolMap(dir)
-  const report = await tools['attendance.check'].execute({ path: file, include_holidays: true }, exec)
+  const report = await tools['attendance_check'].execute({ path: file, include_holidays: true }, exec)
   assert.equal(report.employees[0].overtime_minutes, 480)
   assert.equal(report.totals.over_limit_days, 1)
   assert.equal(report.violations[0].scope, 'day')
@@ -64,10 +64,10 @@ test('a missing punch on a weekend is only an issue when holidays are included',
   const file = await writePunches(dir, 'weekend-missing.csv', ['张伟,2026-06-27,09:00,,60'])
   const tools = toolMap(dir)
   await assert.rejects(
-    () => tools['attendance.check'].execute({ path: file }, exec),
+    () => tools['attendance_check'].execute({ path: file }, exec),
     (error) => error.code === 'E_ATT_EMPTY',
   )
-  const report = await tools['attendance.check'].execute({ path: file, include_holidays: true }, exec)
+  const report = await tools['attendance_check'].execute({ path: file, include_holidays: true }, exec)
   assert.equal(report.totals.missing_punches, 1)
   assert.equal(report.violations[0].code, 'E_ATT_MISSING_PUNCH')
 })
@@ -79,7 +79,7 @@ test('summary expected days stay Monday–Friday even with holiday work', async 
     '张伟,2026-06-27,09:00,13:00,60',
   ])
   const tools = toolMap(dir)
-  const summary = await tools['attendance.summary'].execute(
+  const summary = await tools['attendance_summary'].execute(
     { path: file, include_holidays: true },
     exec,
   )

@@ -22,7 +22,7 @@ Flow -- state-machine grammar, not a row of five boxes:
   the six-gate priority cascade of evaluateRecord() (weekend skip, missing
   punch, daily cap, short break, holiday, overtime, else normal) feeds the
   severity-ranked violation queue (30 / 25 / 20 / 10) and the monthly-cap
-  state; that one audit exits as attendance.summary and attendance.export.
+  state; that one audit exits as attendance_summary and attendance_export.
   The SVG is language-neutral (English + code tokens) so the same light/dark
   pair serves all five README languages.
 
@@ -50,12 +50,15 @@ OUT = os.path.join(ROOT, "docs", "assets")
 # --------------------------------------------------------------------------
 FONT_CANDIDATES = {
     "sans": [r"C:\Windows\Fonts\msyh.ttc",
+             "/mnt/c/Windows/Fonts/msyh.ttc",
              "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
              "/System/Library/Fonts/PingFang.ttc"],
     "sans_bold": [r"C:\Windows\Fonts\msyhbd.ttc",
+                  "/mnt/c/Windows/Fonts/msyhbd.ttc",
                   "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
                   "/System/Library/Fonts/PingFang.ttc"],
     "mono": [r"C:\Windows\Fonts\consola.ttf",
+             "/mnt/c/Windows/Fonts/consola.ttf",
              r"C:\Windows\Fonts\cour.ttf",
              "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf",
              "/System/Library/Fonts/Menlo.ttc"],
@@ -264,7 +267,7 @@ HERO_COPY = {
         meta="纯本地 · 源文件只读 · 无网络 · 不调用模型 · 不上传",
         footer="dsh-attendance-check · Apache-2.0 · DSH ≥0.2.1 <0.4.0",
         panel_title="打卡明细 → 日工时判定",
-        panel_meta="attendance.check · 2026-06-22 → 06-26",
+        panel_meta="attendance_check · 2026-06-22 → 06-26",
         col_name="员工 / 日期", col_punch="上下班",
         col_ruler="日工时 0–12h", col_verdict="判定",
         worked_label="工时 {h}h",
@@ -281,7 +284,7 @@ HERO_COPY = {
         meta="Local only · read-only · no network · no model call",
         footer="dsh-attendance-check · Apache-2.0 · DSH ≥0.2.1 <0.4.0",
         panel_title="Punch rows → daily hours",
-        panel_meta="attendance.check · 2026-06-22 → 06-26",
+        panel_meta="attendance_check · 2026-06-22 → 06-26",
         col_name="employee / date", col_punch="clock in → out",
         col_ruler="worked hours 0–12h", col_verdict="verdict",
         worked_label="worked {h}h",
@@ -488,8 +491,8 @@ class Flow:
             f'<title id="flowTitle">dsh-attendance-check day-state cascade</title>'
             f'<desc id="flowDesc">Six short-circuit gates judge each punch row '
             f'into one day state; issues are ranked 30/25/20/10 and the monthly '
-            f'cap is checked separately; the audit exits as attendance.summary '
-            f'and attendance.export.</desc>'
+            f'cap is checked separately; the audit exits as attendance_summary '
+            f'and attendance_export.</desc>'
             f'<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">'
             f'<stop offset="0" stop-color="{hexs(t["bg_top"])}"/>'
             f'<stop offset="1" stop-color="{hexs(t["bg_bottom"])}"/>'
@@ -665,7 +668,7 @@ class Flow:
                            12.5, muted))
 
         # exit band -------------------------------------------------------
-        self.card(40, 490, 500, 144, "attendance.summary", "R0 · read-only",
+        self.card(40, 490, 500, 144, "attendance_summary", "R0 · read-only",
                   mono_title=True, tag_on_title=True)
         L.append(self.text(56, 550, "6 rows = employee × month · expected 5 · "
                            "attended 4 or 5", 13, ink2))
@@ -674,7 +677,7 @@ class Flow:
         L.append(self.text(56, 600, "month=YYYY-MM filters a single month",
                            12.5, muted))
 
-        self.card(560, 490, 500, 144, "attendance.export", "R1 · local write",
+        self.card(560, 490, 500, 144, "attendance_export", "R1 · local write",
                   mono_title=True, tag_on_title=True)
         L.append(self.text(576, 550, "30 rows × 9 columns, one per audited "
                            "employee-day", 13, ink2))
