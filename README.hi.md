@@ -101,6 +101,11 @@ node samples/quickstart/run.mjs --check
 
 ![dsh-attendance-check quickstart का वास्तविक टर्मिनल आउटपुट](docs/assets/quickstart.png)
 
+![dsh-attendance-check quickstart का वास्तविक टर्मिनल आउटपुट](docs/assets/dsh-attendance-check-demo.gif)
+
+*उसी असली रन का एनिमेटेड संस्करण।*
+
+
 नमूना 6 कर्मचारी × 5 कार्यदिवस (2026-06-22 से 2026-06-26), 30 सिंथेटिक पंच पंक्तियाँ है: 2 ओवरटाइम दिन (Zhang Wei आधी रात पार 1.5 घंटे काम करता है; Li Na 3.5 घंटे काम करके दैनिक सीमा 0.5 घंटे से पार करती है), 1 गायब पंच (Wang Qiang के पास जाने की पंच नहीं) और 1 छोटा ब्रेक (Liu Yang केवल 30 मिनट लेता है)। `samples/quickstart/expected/result.json`, `node samples/quickstart/run.mjs --json` का वास्तविक stdout है, हाथ से लिखा नहीं; स्क्रीनशॉट `--check` का वास्तविक टर्मिनल आउटपुट है (कच्चा कैप्चर [`docs/assets/quickstart.log`](docs/assets/quickstart.log) में)।
 
 ## इनपुट

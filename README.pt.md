@@ -101,6 +101,11 @@ node samples/quickstart/run.mjs --check
 
 ![Saída real de terminal do quickstart do dsh-attendance-check](docs/assets/quickstart.png)
 
+![Saída real de terminal do quickstart do dsh-attendance-check](docs/assets/dsh-attendance-check-demo.gif)
+
+*A versão animada da mesma execução.*
+
+
 O exemplo é de 6 funcionários × 5 dias úteis (2026-06-22 a 2026-06-26), 30 marcações sintéticas: 2 dias com horas extras (Zhang Wei trabalha 1,5 h cruzando a meia-noite; Li Na trabalha 3,5 h e excede o teto diário em 0,5 h), 1 marcação faltante (Wang Qiang não tem saída) e 1 intervalo insuficiente (Liu Yang faz apenas 30 minutos). `samples/quickstart/expected/result.json` é a saída real de `node samples/quickstart/run.mjs --json`, não escrita à mão; a captura de tela é a saída real de terminal do `--check` (captura bruta em [`docs/assets/quickstart.log`](docs/assets/quickstart.log)).
 
 ## Entrada

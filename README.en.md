@@ -103,6 +103,11 @@ node samples/quickstart/run.mjs --check
 
 ![dsh-attendance-check quickstart terminal output](docs/assets/quickstart.png)
 
+![dsh-attendance-check quickstart terminal output](docs/assets/dsh-attendance-check-demo.gif)
+
+*The animated version of the same run.*
+
+
 The sample is 6 employees × 5 workdays (2026-06-22 to 2026-06-26), 30 synthetic punch rows: 2 overtime days (Zhang Wei works 1.5h across midnight; Li Na works 3.5h and exceeds the daily cap by 0.5h), 1 missing punch (Wang Qiang has no clock-out) and 1 short break (Liu Yang takes only 30 minutes). `samples/quickstart/expected/result.json` is the real stdout of `node samples/quickstart/run.mjs --json`, not hand-written; the screenshot is the real `--check` terminal output (raw capture in [`docs/assets/quickstart.log`](docs/assets/quickstart.log)).
 
 ## Input

@@ -101,6 +101,11 @@ node samples/quickstart/run.mjs --check
 
 ![dsh-attendance-check quickstart 真实运行输出](docs/assets/quickstart.png)
 
+![dsh-attendance-check quickstart 真实运行输出](docs/assets/dsh-attendance-check-demo.gif)
+
+*同一段真实运行的动图版本。*
+
+
 样例是 6 名员工 × 2026-06-22 至 2026-06-26 五个工作日、共 30 条合成打卡：其中 2 个加班日（张伟跨零点 1.5 小时、李娜 3.5 小时超出单日上限 0.5 小时）、1 个缺卡（王强缺下班卡）、1 个休息不足（刘洋只休 30 分钟）。金标 `samples/quickstart/expected/result.json` 由 `node samples/quickstart/run.mjs --json` 真实产生，不是手写；截图是 `--check` 的真实终端输出（原始捕获见 [`docs/assets/quickstart.log`](docs/assets/quickstart.log)）。
 
 ## 输入
