@@ -11,6 +11,8 @@
 
 Una herramienta de auditoría de asistencia puramente local para DeepSeek Harness: lee el CSV de fichajes que indiques y audita cada día contra una jornada estándar de 8 horas, un tope de 3 horas extra diarias y un tope de 36 horas extra mensuales — sin red, sin llamadas a modelos y sin carga de datos.
 
+Última verificación: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [Instalar](#instalación-en-tres-pasos) · [Configuración](#configuración) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -104,7 +106,6 @@ node samples/quickstart/run.mjs --check
 ![Salida real de terminal del quickstart de dsh-attendance-check](docs/assets/dsh-attendance-check-demo.gif)
 
 *La versión animada de la misma ejecución.*
-
 
 El ejemplo son 6 empleados × 5 días laborables (del 2026-06-22 al 2026-06-26), 30 fichajes sintéticos: 2 días con horas extra (Zhang Wei trabaja 1.5 h cruzando la medianoche; Li Na trabaja 3.5 h y supera el tope diario por 0.5 h), 1 fichaje faltante (Wang Qiang no tiene salida) y 1 descanso insuficiente (Liu Yang solo descansa 30 minutos). `samples/quickstart/expected/result.json` es la salida real de `node samples/quickstart/run.mjs --json`, no escrita a mano; la captura es la salida real de terminal de `--check` (captura cruda en [`docs/assets/quickstart.log`](docs/assets/quickstart.log)).
 
@@ -282,7 +283,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-Versión actual `0.2.0` · 135 pruebas superadas (`node --test test/*.test.mjs`). Las imágenes del README se generan programáticamente con [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python: el hero se dibuja con Pillow y el diagrama de estructura es un SVG escrito a mano; ambos en variante clara y oscura) y puede reejecutarse en cualquier momento.
+Versión actual `0.2.1` · 135 pruebas superadas (`node --test test/*.test.mjs`). Las imágenes del README se generan programáticamente con [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python: el hero se dibuja con Pillow y el diagrama de estructura es un SVG escrito a mano; ambos en variante clara y oscura) y puede reejecutarse en cualquier momento.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `attendance`, `overtime`, `timesheet`, `punch-clock`, `payroll`, `hr`, `csv`, `perrylink`
 

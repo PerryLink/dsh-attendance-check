@@ -11,6 +11,8 @@
 
 DeepSeek Harness के लिए पूरी तरह लोकल उपस्थिति ऑडिट टूल: आपके बताए पंच CSV को पढ़कर हर दिन को 8 घंटे के मानक कार्यदिवस, 3 घंटे की दैनिक ओवरटाइम सीमा और 36 घंटे की मासिक ओवरटाइम सीमा के विरुद्ध जांचता है — बिना नेटवर्क, बिना मॉडल कॉल, बिना अपलोड।
 
+अंतिम सत्यापन: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [इंस्टॉल](#तीन-चरणों-में-शुरुआत) · [कॉन्फ़िगरेशन](#कॉन्फ़िगरेशन) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -104,7 +106,6 @@ node samples/quickstart/run.mjs --check
 ![dsh-attendance-check quickstart का वास्तविक टर्मिनल आउटपुट](docs/assets/dsh-attendance-check-demo.gif)
 
 *उसी असली रन का एनिमेटेड संस्करण।*
-
 
 नमूना 6 कर्मचारी × 5 कार्यदिवस (2026-06-22 से 2026-06-26), 30 सिंथेटिक पंच पंक्तियाँ है: 2 ओवरटाइम दिन (Zhang Wei आधी रात पार 1.5 घंटे काम करता है; Li Na 3.5 घंटे काम करके दैनिक सीमा 0.5 घंटे से पार करती है), 1 गायब पंच (Wang Qiang के पास जाने की पंच नहीं) और 1 छोटा ब्रेक (Liu Yang केवल 30 मिनट लेता है)। `samples/quickstart/expected/result.json`, `node samples/quickstart/run.mjs --json` का वास्तविक stdout है, हाथ से लिखा नहीं; स्क्रीनशॉट `--check` का वास्तविक टर्मिनल आउटपुट है (कच्चा कैप्चर [`docs/assets/quickstart.log`](docs/assets/quickstart.log) में)।
 
@@ -282,7 +283,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-वर्तमान संस्करण `0.2.0` · 135 टेस्ट पास (`node --test test/*.test.mjs`)। README चित्र [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) द्वारा प्रोग्रामेटिक रूप से बनाए जाते हैं (Python: hero Pillow से बनाया जाता है और संरचना आरेख हस्तलिखित SVG है; दोनों हल्की और गहरी variant में) और कभी भी दोबारा चलाया जा सकता है।
+वर्तमान संस्करण `0.2.1` · 135 टेस्ट पास (`node --test test/*.test.mjs`)। README चित्र [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) द्वारा प्रोग्रामेटिक रूप से बनाए जाते हैं (Python: hero Pillow से बनाया जाता है और संरचना आरेख हस्तलिखित SVG है; दोनों हल्की और गहरी variant में) और कभी भी दोबारा चलाया जा सकता है।
 
 विषय: `deepseek-harness`, `dsh`, `dsh-plugin`, `attendance`, `overtime`, `timesheet`, `punch-clock`, `payroll`, `hr`, `csv`, `perrylink`
 

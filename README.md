@@ -11,6 +11,8 @@
 
 面向 DeepSeek Harness 的纯本地考勤核对工具：读你指定的打卡 CSV，按 8 小时标准工时、3 小时单日加班上限、36 小时月加班上限逐日核对——不联网、不调用模型、不上传。
 
+最近一次核验：DeepSeek Harness `dsh-v0.2.3-alpha.1`（2026-11-22）。
+
 [安装](#三步上手) · [配置](#配置) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -104,7 +106,6 @@ node samples/quickstart/run.mjs --check
 ![dsh-attendance-check quickstart 真实运行输出](docs/assets/dsh-attendance-check-demo.gif)
 
 *同一段真实运行的动图版本。*
-
 
 样例是 6 名员工 × 2026-06-22 至 2026-06-26 五个工作日、共 30 条合成打卡：其中 2 个加班日（张伟跨零点 1.5 小时、李娜 3.5 小时超出单日上限 0.5 小时）、1 个缺卡（王强缺下班卡）、1 个休息不足（刘洋只休 30 分钟）。金标 `samples/quickstart/expected/result.json` 由 `node samples/quickstart/run.mjs --json` 真实产生，不是手写；截图是 `--check` 的真实终端输出（原始捕获见 [`docs/assets/quickstart.log`](docs/assets/quickstart.log)）。
 
@@ -282,7 +283,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-当前版本 `0.2.0` · 135 项测试通过（`node --test test/*.test.mjs`）。配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python：hero 用 Pillow 绘制、结构图为手写 SVG，均为深浅双版），可重复执行。
+当前版本 `0.2.1` · 135 项测试通过（`node --test test/*.test.mjs`）。配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python：hero 用 Pillow 绘制、结构图为手写 SVG，均为深浅双版），可重复执行。
 
 Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `attendance`, `overtime`, `timesheet`, `punch-clock`, `payroll`, `hr`, `csv`, `perrylink`
 
