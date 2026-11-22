@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Attendance check",
+    "description": "Turn a punch-clock CSV into per-employee daily hours, overtime, over-limit days, missing punches and short breaks, then roll the month up and export a reconciliation CSV."
+  }
+}

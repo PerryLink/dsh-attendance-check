@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Attendance check",
+    "description": "把打卡明细 CSV 核对成每人的日工时、加班、超限日、缺卡与休息不足，按月汇总并导出核对表。"
+  }
+}

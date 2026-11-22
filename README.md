@@ -283,7 +283,7 @@ node --test test/*.test.mjs
 node scripts/gate.mjs
 ```
 
-当前版本 `0.2.1` · 135 项测试通过（`node --test test/*.test.mjs`）。配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python：hero 用 Pillow 绘制、结构图为手写 SVG，均为深浅双版），可重复执行。
+当前版本 `0.2.2` · 135 项测试通过（`node --test test/*.test.mjs`）。配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python：hero 用 Pillow 绘制、结构图为手写 SVG，均为深浅双版），可重复执行。
 
 Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `attendance`, `overtime`, `timesheet`, `punch-clock`, `payroll`, `hr`, `csv`, `perrylink`
 
